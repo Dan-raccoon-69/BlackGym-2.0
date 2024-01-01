@@ -1,0 +1,259 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 2 dic. 2023, 13:33:37
+    Author     : Daniel
+*/
+body{
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Estilo para la tabla */
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    background-color: #333; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Estilo para las filas de encabezado */
+.table thead th {
+    border: none;
+    background-color: #555; /* Encabezado oscuro */
+    color: #fff;
+}
+
+/* Estilo para las celdas de encabezado y cuerpo */
+.table th, .table td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #444; /* Borde inferior oscuro */
+}
+
+/* Estilo para las filas alternas */
+.table tbody tr:nth-child(even) {
+    background-color: #444; /* Fondo más oscuro para filas pares */
+}
+
+
+/* Estilo para el panel */
+.panel-default {
+    background-color: #444; /* Fondo oscuro para el panel */
+    color: #fff; /* Texto blanco */
+    border: 1px solid #555; /* Borde oscuro */
+    border-radius: 5px;
+}
+
+/* Estilo para el encabezado del panel */
+.panel-heading {
+    background-color: #555; /* Encabezado oscuro */
+    color: #fff;
+    border-bottom: 1px solid #666; /* Borde inferior oscuro */
+    border-radius: 5px 5px 0 0;
+    margin: 0;
+    padding: 0;
+}
+
+.panel-title{
+    margin-bottom: 0;
+    padding-top: 20px;
+}
+
+/* Estilo para el cuerpo del panel */
+.panel-body {
+    padding: 20px;
+
+}
+
+/* Estilo para los botones dentro de las celdas */
+.table td a.btn {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 5px;
+    margin-bottom: 20px;
+    padding: 10px 15px;
+    background-color: #232D3F; /* Fondo azul */
+    border-radius: 3px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Estilo para los botones dentro de las celdas en hover */
+.table td a.btn:hover {
+    background-color: rgba(8, 101, 201, 0.408); /* Fondo más oscuro al pasar el ratón */
+    color: #fff;
+    border-color: #0056b3; /* Borde más oscuro al pasar el ratón */
+}
+
+tr .text-right{
+    text-align: right;
+}
+
+/* Estilos para el formulario de búsqueda */
+.navbar-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Alinea el contenido a la derecha */
+}
+
+form.navbar-right{
+    text-align: right;
+    width: 100% !important;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: max-content;
+    margin: 0;
+}
+
+/* ... Otros estilos ... */
+
+.btn-success {
+    background-color: #3498db; /* Color azul para el botón de búsqueda */
+    border-color: #3498db;
+    color: #fff; /* Texto blanco */
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out; /* Transición suave */
+    
+}
+
+/* Estilos de hover para el botón de búsqueda */
+.btn-success:hover {
+    background-color: #2980b9; /* Cambia el color al pasar el ratón */
+    border-color: #2980b9;
+    color: #fff; /* Texto blanco */
+    cursor: pointer;
+}
+
+#crearPlanForm{
+    margin-top: 20px;
+}
+
+#crearPlanForm form{
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#crearPlanForm label{
+    display: block;
+    margin-bottom: 5px;
+}
+
+#crearPlanForm input{
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+#crearPlanLink{
+    cursor: pointer;
+}
+
+.invisible {
+    display: none;
+}
+
+
+/* Cambié la clase 'modern-form' por 'custom-form' en el HTML */
+.custom-form .form-container {
+    max-width: 400px;
+    height: 230px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.custom-form .form-label {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #fff; 
+}
+
+.custom-form .form-input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #444; 
+    border-radius: 4px;
+    background-color: #333; 
+    color: #fff;
+}
+
+.custom-form .form-button {
+    width: 100%;
+    background-color: #3498db;
+    color: #fff;
+    padding: 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.custom-form .form-button:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 600px) {
+    .custom-form .form-container {
+        width: 100%;
+    }
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 600px) {
+    .navbar-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    .table td a.btn {
+        display: block;
+        width: 65%;
+        margin-bottom: 10px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .panel-default,
+    .panel-body{
+        font-size: 14px;
+        padding: 0 0 !important;
+    }
+
+    .form-container {
+        width: 100%;
+    }
+
+}

@@ -1,0 +1,76 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 9 dic. 2023, 22:56:48
+    Author     : Daniel
+*/
+*{
+    font-size: 17px;
+}
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Agrega este estilo a tu hoja de estilos */
+.my-swal-button {
+    background-color: #2279cb;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+body .custom-form-container {
+    max-width: 550px;
+    margin: 70px auto;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #1e1e1e;
+    font-size: 20px;
+}
+
+body .my-custom-form-label {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    color: #fff;
+}
+
+body .my-form-input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: #fff;
+}
+
+body .my-form-button {
+    width: 100%;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 20px 0;
+    text-align: center;
+}
+
+body .my-form-button:hover {
+    background-color: #2980b9;
+}
+

@@ -1,0 +1,133 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 11 dic. 2023, 16:51:09
+    Author     : Daniel
+*/
+
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.6rem;
+    line-height: 2;
+}
+
+
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 3.2rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: 2.3rem;
+    text-align: center;
+}
+
+p {
+    font-size: 2rem;
+}
+
+aside{
+    background-color: #444; /* Fondo oscuro para el panel */
+    color: #fff; /* Texto blanco */
+    border: 0px solid #555; /* Borde oscuro */
+    border-radius: 5px;
+    max-width: 100%;
+}
+
+.contenedor {
+    max-width: 100%;
+    margin: 0rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+aside .contenedorAside{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contenedorAside .contenedorDatos{
+    display: flex;
+}
+
+.tabla{
+    align-items: center;
+    overflow-x:auto;
+}
+
+.panel-default a {
+    display: inline-block;
+    background-color: #2196F3;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.panel{
+    width: 100%;
+}
+
+.panel .contenedorDatos{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.panel .contenedorDatos .Tarjeta, .Total, .Efectivo{
+    display: flex;
+    flex-direction: row;
+}
+
+.my-form-input{
+    background-color: #4a4a4a !important;
+}
+
+.filtros{
+    display: flex;
+    margin: auto;
+    text-transform: uppercase;
+    text-align: center;
+    gap: 5rem;
+    padding: 1rem;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+
+/** CODIGO AQUI **/
+
+@media (max-width: 768px){
+    .con-sidebar{
+        display: grid;
+        gap: 3rem;
+    }
+    aside{
+        flex: 1;
+    }
+    article{
+        flex: 3;
+    }
+
+}

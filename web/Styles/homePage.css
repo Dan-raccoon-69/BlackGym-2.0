@@ -1,0 +1,352 @@
+*{
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: #111; /* Fondo oscuro */
+    color: #fff; /* Texto blanco */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    background-color: #333; /* Fondo oscuro del navbar */
+    position: relative; /* Agregado para establecer un contexto de apilamiento */
+    z-index: 2; /* Ajustado para establecer un valor de z-index mayor que el del aside */
+}
+
+.panel-heading .enlace{
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center !important;
+    width: 130px;
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin: auto;
+}
+
+.panel-heading .enlace:hover{
+    /*background-color: #232D3F;*/
+    background-color: #efb810;
+}
+
+.navbar-left {
+    flex: 1;
+}
+
+.logo {
+    padding-left: 20px;
+    height: 100px;
+    width: 150px;
+}
+
+.navbar-right {
+    flex: 2; /* Ajustado para que la barra de búsqueda ocupe el 70% del ancho total */
+}
+
+/* Estilos para el formulario de búsqueda */
+.navbar-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-control {
+    width: 700px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease-in-out;
+}
+
+#progressChart {
+    width: 600px !important; /* Ajusta el ancho del canvas según tus necesidades */
+    height: 530px !important; /* Ajusta la altura del canvas según tus necesidades */
+    margin: 0 0 0 120px; /* Ajusta el margen exterior según tus necesidades */
+    border: 1px solid rgba(235, 236, 240, 0.644); /* Añade un borde para resaltar el canvas */
+    border-radius: 10px; /* Añade esquinas redondeadas */
+    box-shadow: 0 0 10px #232D3F; /* Añade una sombra sutil */
+    padding: 0;
+}
+
+.form-control:focus {
+    border-color: #3498db; /* Cambia el color del borde al enfocar el campo */
+}
+
+.btn-success {
+    background-color: #3498db;
+    border-color: #3498db;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.btn-success:hover {
+    background-color: #148dde;
+    border-color: #148dde;
+    color: #fff;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 600px) {
+    .navbar-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-control {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    /* Estilos específicos para dispositivos con ancho máximo de 600px (móviles) */
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .navbar-left,
+    .navbar-right {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .logo {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.sidebar {
+    background-color: #232D3F; /* Fondo oscuro del menú */
+    color: #fff;
+    padding: 0;
+    width: 23%; /* Ancho del 30% de la pantalla */
+    height: calc(100vh - 100px); /* Altura completa menos el doble del padding */
+   
+    box-sizing: border-box; /* Incluye padding en el ancho total */
+    top: 0; /* Alinear en la parte superior */
+    left: 0; /* Alinear a la izquierda */
+    overflow-y: auto; /* Agregar desplazamiento vertical si es necesario */
+    display: flex;
+    flex-direction: column;    
+}
+
+.menu-item {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    transition: background-color 0.5s;
+    
+}
+
+.submenu-content {
+    display: none;
+    padding-left: 20px; /* Agregar un poco de espacio a las opciones del submenu */
+}
+
+.menu-item:hover .submenu-content {
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.5s;
+    cursor: pointer;
+}
+
+.menu-item a,
+.submenu-content a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 32.5px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.5s;
+}
+
+.menu-item:hover,
+.submenu-content:hover {
+    background-color: #555; /* Color de fondo al pasar el ratón */
+    width: 100%;
+    cursor: pointer;
+}
+
+.submenu-content a:hover {
+    background-color: #232D3F; /* Color de fondo al pasar el ratón */
+    width: 100%;
+    border-radius: 0;
+}
+
+/* Estilos para el menú hamburguesa */
+.burger-menu {
+    display: none; /* Ocultar por defecto en pantallas grandes */
+    cursor: pointer;
+}
+
+.bar {
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+/* Mostrar el menú hamburguesa solo en dispositivos móviles */
+@media screen and (max-width: 600px) {
+    .burger-menu {
+        display: block;
+    }
+
+    .sidebar {
+        display: none; /* Ocultar la barra lateral por defecto en dispositivos móviles */
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 70%;
+        overflow-x: hidden;
+        padding-top: 20px;
+        background-color: #232D3F;
+        color: #fff;
+    }
+
+    .sidebar a {
+        padding: 10px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #fff;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+        background-color: #555;
+        width: 100%;
+    }
+
+    #progressChart {
+        width: 100% !important; /* Ajusta el ancho del canvas según tus necesidades */
+        height: fit-content !important; /* Ajusta la altura del canvas según tus necesidades */
+        margin: 20px 5px; /* Ajusta el margen exterior según tus necesidades */
+        border: 1px solid rgba(235, 236, 240, 0.644); /* Añade un borde para resaltar el canvas */
+        border-radius: 10px; /* Añade esquinas redondeadas */
+        box-shadow: 0 0 10px #232D3F; /* Añade una sombra sutil */
+        padding: 0;
+    }
+}
+/**************************************************** CONTENEDOR */
+/* Estilos para el contenedor adicional */
+.main-container {
+    display: flex;
+}
+
+.additional-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.rectangle {
+    max-height: 200px;
+}
+.rectangle p{
+    text-align: center;
+    font-size: 50px;
+}
+
+.cuadrados_container{
+    width: 100%;
+    height: calc(100vh - 250px);
+    display: flex;
+    flex-direction: row;
+}
+
+.square:nth-child(1) {
+    flex-grow: 0.7;
+    margin-bottom: 10px;
+}
+
+.square:nth-child(2) {
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+.aquare-info{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
+
+.panel-heading h2, h3, figure{
+    text-align: center;
+    font-size: 30px;
+}
+
+.panel-heading figure img{
+    max-width: 250px;
+}
+
+#suggestionList {
+    color: white; /* Cambia esto al color de texto que prefieras */
+}
+/* Mostrar el menú hamburguesa solo en dispositivos móviles */
+@media screen and (max-width: 600px) {
+    .cuadrados_container{
+        width: 95%;
+        height: fit-content;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .panel-heading h2, h3, figure{
+        text-align: center;
+        font-size: 25px;
+    }
+}
+
+/* Estilos para el contenedor de sugerencias */
+#suggestionsContainer {
+    position: relative; /* Para posicionar las sugerencias de forma absoluta con respecto al contenedor */
+}
+
+/* Estilos para cada enlace de sugerencia */
+#suggestionList a {
+    
+    display: block;
+    padding: 5px;
+    background-color: #000000;  
+    border: 1px solid #232D3F;
+    margin: 5px 0;
+    text-decoration: none;
+    color: #e5e1e1;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+/* Estilos para resaltar el enlace cuando el mouse pasa sobre él */
+#suggestionList a:hover {
+    background-color: #232D3F;
+}
+
+.navbar .contenedorBuscardor{
+    display: flex;
+    flex-direction: column;
+}

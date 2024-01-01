@@ -1,0 +1,91 @@
+/* 
+    Created on : 27 dic. 2023, 23:32:43
+    Author     : Daniel
+*/
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    width: 80% !important;
+    margin: auto;
+    padding: 15px;
+}
+
+.container-max{
+    display: flex;
+}
+
+.masthead {
+    background-color: #333; /* Color de fondo del encabezado */
+    text-align: center;
+    width: 100%;
+}
+
+.masthead .text-muted {
+    margin-bottom: 30px;
+    font-size: 22px;
+}
+
+/* Estilo del panel */
+.custom-panel {
+    margin: auto;
+}
+
+/* Estilo del cuerpo del panel */
+.custom-panel-body {
+    padding: 15px; /* Espaciado interior */
+    margin: 0 auto;
+}
+
+/* Estilo de la tabla */
+.custom-table {
+    background-color: #333; /* Fondo oscuro */
+    margin-bottom: 0; /* Sin margen inferior */
+    padding: 15px;
+    width: 750px !important;
+    flex-grow: 1.5;
+    text-align: center;
+}
+
+/* Estilo de las filas impares de la tabla */
+.custom-table-striped tbody tr:nth-child(odd) {
+    background-color: #444; /* Color de fondo más oscuro para filas impares */
+}
+
+/* Estilo del encabezado de la tabla */
+.custom-table thead th {
+    background-color: #555; /* Color de fondo del encabezado */
+    color: #fff; /* Texto blanco en el encabezado */
+    padding: 0 10px;
+}
+
+/* Estilo de los enlaces en la tabla */
+.custom-table a {
+    color: #f8f8f8; /* Color del texto de los enlaces */
+    display: block;
+    padding: 3px;
+    margin: 3px 0;
+    text-decoration: none;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Estilo de los enlaces al pasar el ratón sobre ellos */
+.custom-table a:hover {
+    background-color: #2980b9;
+    color: white; /* Color del texto de los enlaces al pasar el ratón sobre ellos */
+}
+
+.table-options{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+
