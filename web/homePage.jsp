@@ -169,9 +169,23 @@
                         <a href="VentasController?action=agregarVentas"><i class="icono"></i> Planes</a>
                     </div>
                 </div>
-                <div class="menu-item"><a href="VentasController?action=verReporte"><i class="icono"></i> Reportes</a></div>
+                <div class="menu-item submenu">
+                    <a href="VentasController?action=verReporte"><i class="icono"></i> Reportes</a>
+                    <div class="submenu-content">
+                        <a href="VentasController?action=verReporte"><i class="icono"></i> Planes</a>
+                        <a href="VentasController?action=verReporte"><i class="icono"></i> Productos</a>
+                    </div>
+                </div>
+                
                 <div class="menu-item"><a href="LoginController?action=irAdministracion"><i class="icono"></i> Administrador</a></div>
-                <div class="menu-item"><a href="ProductosController?action=verProductos"><i class="icono"></i> Productos</a></div>
+                
+                <div class="menu-item submenu">
+                    <a href="ProductosController?action=verProductos"><i class="icono"></i> Productos</a>
+                    <div class="submenu-content">
+                        <a href="ProductosController?action=agregarProductos"><i class="icono"></i> Agregar</a>
+                        <a href="ProductosController?action=verProductos"><i class="icono"></i> Ver Prod</a>
+                    </div>
+                </div>
             </aside>
 
             <!-- Contenedor adicional -->

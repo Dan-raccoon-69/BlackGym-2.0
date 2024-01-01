@@ -66,4 +66,64 @@ public class ProductoDao {
             return null;
         }
     }
+    
+    public boolean insertar(Producto producto) {
+        String sql = "insert into productos (NomProd, DesProd, Exi, CosProdu) values (?, ?, ?, ?)";
+
+        try {
+            Connection conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, producto.getNomProd());
+            ps.setString(2, producto.getDesProd());
+            ps.setInt(3, producto.getExi());
+            ps.setDouble(4, producto.getCosProdu());
+            ps.executeUpdate();
+            return true;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean actualizarProducto(Producto producto) {
+        String sql = "UPDATE productos SET NomProd=?, DesProd=?, Exi=?, CosProdu=? WHERE NumProd = ?";
+
+        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, producto.getNomProd());
+            ps.setString(2, producto.getDesProd());
+            ps.setInt(3, producto.getExi());
+            ps.setDouble(4, producto.getCosProdu());
+            ps.setDouble(5, producto.getNumProd());
+            int filasActualizadas = ps.executeUpdate();
+            return filasActualizadas > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
+    public Producto obtenerProductoPorFolio(int NumProd) {
+        try {
+            Connection conn = getConnection();
+            String sql = "SELECT * FROM productos WHERE NumProd = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, NumProd);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Producto producto = new Producto(0);
+                producto.setNumProd(rs.getInt("NumProd"));
+                producto.setNomProd(rs.getString("NomProd"));
+                producto.setDesProd(rs.getString("DesProd"));
+                producto.setExi(rs.getInt("Exi"));
+                producto.setCosProdu(rs.getDouble("CosProdu"));
+                return producto;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null; // Devuelve null si no se encuentra ningún socio con el folio dado
+    }
+    
+    
 }
