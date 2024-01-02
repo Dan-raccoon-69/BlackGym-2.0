@@ -35,6 +35,7 @@ public class SociosController extends HttpServlet {
         PlanesDao planesDao = new PlanesDao();
         List<Planes> listaPlanes = planesDao.obtenerTodosLosPlanes();
         RequestDispatcher dispatcher;
+        Socio socio = null;
         switch (action) {
             case "inicio":
                 rd = request.getRequestDispatcher("/homePage.jsp");
@@ -48,7 +49,7 @@ public class SociosController extends HttpServlet {
                 listaPlanes = planesDao.obtenerTodosLosPlanes();
                 LocalDate fechaActual = LocalDate.now();
                 // Colocar la lista en el alcance de solicitud
-                
+
                 request.setAttribute("listaPlanes", listaPlanes);
                 request.setAttribute("fechaActual", fechaActual);
                 // Redirigir a la página de modificación
@@ -61,7 +62,7 @@ public class SociosController extends HttpServlet {
 
                 // Obtener el plan de la base de datos usando el PlanDao
                 SociosDao sociosDao = new SociosDao();
-                Socio socio = sociosDao.obtenerSocioPorFolio(numFol);
+                socio = sociosDao.obtenerSocioPorFolio(numFol);
 
                 // Agregar el plan al request para que la vista pueda acceder a él
                 request.setAttribute("socio", socio);
@@ -74,6 +75,27 @@ public class SociosController extends HttpServlet {
 
                 // Redirigir a la página de modificación
                 dispatcher = request.getRequestDispatcher("/modificarSocio.jsp");
+                dispatcher.forward(request, response);
+                break;
+            case "modificarPlanSocio":
+                // Obtener el número de socio a modificar desde los parámetros de la solicitud
+                int numFolS = Integer.parseInt(request.getParameter("fol"));
+
+                // Obtener el plan de la base de datos usando el PlanDao
+                SociosDao sociosDaoS = new SociosDao();
+                socio = sociosDaoS.obtenerSocioPorFolio(numFolS);
+
+                // Agregar el plan al request para que la vista pueda acceder a él
+                request.setAttribute("socio", socio);
+
+                planesDao = new PlanesDao();
+                listaPlanes = planesDao.obtenerTodosLosPlanes();
+
+                // Colocar la lista en el alcance de solicitud
+                request.setAttribute("listaPlanes", listaPlanes);
+
+                // Redirigir a la página de modificación
+                dispatcher = request.getRequestDispatcher("/modificarPlanSocio.jsp");
                 dispatcher.forward(request, response);
                 break;
             case "eliminar":
@@ -97,13 +119,13 @@ public class SociosController extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("insertar".equals(action)) {
-            
+
             String nombreParametro = request.getParameter("Nom");
             String edadParametro = request.getParameter("Eda");
             String TelParametro = request.getParameter("Tel");
             String CorElecParametro = request.getParameter("CorElec");
             int numPlanParametro = Integer.parseInt(request.getParameter("NumPlan"));
-            
+
             // Obtener los parámetros como String desde la solicitud
             String fechaString = request.getParameter("fecha");
             String fechaOutString = request.getParameter("fechaOut");
@@ -126,7 +148,7 @@ public class SociosController extends HttpServlet {
                 e.printStackTrace();
                 // Manejar la excepción de análisis aquí
             }
-            
+
             Socio socioNuevo = new Socio(0);
             socioNuevo.setNom(nombreParametro);
             socioNuevo.setEda(edadParametro);
@@ -163,7 +185,7 @@ public class SociosController extends HttpServlet {
             String CpParametro = request.getParameter("Cp");
             String EntParametro = request.getParameter("Ent");
             String EstParametro = request.getParameter("Est");
-            
+
             // Obtener los parámetros como String desde la solicitud
             String fechaString = request.getParameter("fecha");
             String fechaOutString = request.getParameter("fechaOut");

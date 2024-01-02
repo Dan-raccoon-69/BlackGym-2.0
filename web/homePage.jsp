@@ -94,17 +94,20 @@
                         console.log('Progreso:', progress);
 
                         // Actualiza el porcentaje en la interfaz gr�fica
-                        $("#progressPercentage").text(progress.toFixed(3) + "%");
+                        var percentageText = progress >= 100 ? '100%' : progress.toFixed(3) + "%";
+                        $("#progressPercentage").text(percentageText);
 
                         // Configuraci�n del gr�fico
+                        var progressColor = progress >= 100 ? '#9e0404' : '#9e0404';  // Rojo si el progreso es mayor o igual a 100, de lo contrario, rojo
+                        var remainingColor = progress >= 100 ? '#9e0404' : '#6b6b6b';  // Rojo si el progreso es mayor o igual a 100, de lo contrario, gris oscuro
+
                         var config = {
                             type: 'doughnut',
                             data: {
                                 labels: ['Progreso', 'Restante'],
                                 datasets: [{
-                                        data: [progress, 100 - progress],
-                                        backgroundColor: ['#14213d', '#e7b057'],
-                                        //backgroundColor: ['#1a1110', '#353839'],
+                                        data: [progress, progress >= 100 ? 0 : 100 - progress],
+                                        backgroundColor: [progressColor, remainingColor],
                                     }]
                             },
                             options: {
@@ -164,10 +167,12 @@
                 </div>
                 <div class="menu-item submenu">
                     <a href="VentasController?action=agregarVentas"><i class="icono"></i> Ventas</a>
+                    <!--
                     <div class="submenu-content">
-                        <a href="VentasController?action=agregarVentas"><i class="icono"></i> Productos</a>
+                          
                         <a href="VentasController?action=agregarVentas"><i class="icono"></i> Planes</a>
                     </div>
+                    -->
                 </div>
                 <div class="menu-item submenu">
                     <a href="VentasController?action=verReporte"><i class="icono"></i> Reportes</a>
@@ -176,9 +181,9 @@
                         <a href="VentasController?action=verReporte"><i class="icono"></i> Productos</a>
                     </div>
                 </div>
-                
+
                 <div class="menu-item"><a href="LoginController?action=irAdministracion"><i class="icono"></i> Administrador</a></div>
-                
+
                 <div class="menu-item submenu">
                     <a href="ProductosController?action=verProductos"><i class="icono"></i> Productos</a>
                     <div class="submenu-content">
@@ -191,7 +196,7 @@
             <!-- Contenedor adicional -->
             <div class="additional-container">
                 <div class="rectangle">
-                    <p style="font-family: 'Times New Roman', Times, serif; font-weight: bolder;">BIENVENIDO</p>
+                    <p style="font-family: Arial, Helvetica, sans-serif;">BIENVENIDO</p>
                 </div>
                 <div class="cuadrados_container">
 
@@ -209,7 +214,7 @@
                                 <h3><b>Folio: ${param.fol} </b> </h3>
                                 <h3><b>Inicio: ${param.inp} </b> </h3>
                                 <h3><b>Vence: ${param.fip} </b> </h3>  
-                                <a class="enlace" href="SociosController?action=modificar&fol=${param.fol}" role="button">Modificar Plan</a> 
+                                <a class="enlace" href="SociosController?action=modificarPlanSocio&fol=${param.fol}" role="button">Modificar Plan</a> 
                             </div>
                         </div> 
                     </div>

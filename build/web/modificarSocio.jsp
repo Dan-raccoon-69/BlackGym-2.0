@@ -36,7 +36,7 @@
                 function actualizarFechaTermino() {
                     var fechaInicial = $('input[name="fecha"]').val();
                     var numPlanSeleccionado = $('select[name="NumPlan"]').val();
-                    console.log("fechaInicial ",fechaInicial);
+                    console.log("fechaInicial ", fechaInicial);
                     console.log(numPlanSeleccionado);
                     // Lógica para calcular la fecha de término basada en el tipo de plan
                     let fechaTermino;
@@ -77,6 +77,11 @@
             });
 
         </script>
+
+        <script>
+            // Deshabilitar el <select> después de seleccionar la opción
+            document.getElementById("miSelect").disabled = true;
+        </script>
     </head>
     <body>
         <div class="masthead">
@@ -106,9 +111,9 @@
 
                     <label for="CorElec" class="my-form-label">Email:</label>
                     <input type="text" autocomplete="off" name="CorElec" class="my-form-input" value="${socio.corElec}" required>
-                    
-                    <label for="NumPlan" class="my-form-label">Seleccionar Plan:</label>
-                    <select name="NumPlan" class="my-form-input" required>
+
+                    <label for="NumPlan" class="my-form-label" hidden >Seleccionar Plan:</label>
+                    <select name="NumPlan" class="my-form-input" required hidden>
                         <c:forEach var="plan" items="${listaPlanes}">
                             <c:choose>
                                 <c:when test="${socio.numPlan eq plan.numPlan}">
@@ -121,8 +126,8 @@
                         </c:forEach>
                     </select>
 
-                    <label for="fecha" class="my-form-label" >Seleccionar Fecha:</label>
-                    <input type="date" class="my-form-input" value="${socio.inp}" id="fecha" name="fecha" required>
+                    <label for="fecha" class="my-form-label" >Fecha de inicio:</label>
+                    <input type="date" class="my-form-input" value="${socio.inp}" id="fecha" name="fecha" readonly required>
 
                     <label for="fechaOut" class="my-form-label">Fecha de Termino:</label>
                     <input type="date" class="my-form-input" id="fechaOut" name="fechaOut" readonly >

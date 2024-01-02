@@ -1,6 +1,6 @@
 <%-- 
-    Document   : modificarSocio
-    Created on : 9 dic. 2023, 21:35:15
+    Document   : modificarPlanSocio
+    Created on : 2 ene. 2024, 11:21:29
     Author     : Daniel
 --%>
 
@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Modificar Socio</title>
+        <title>Modificar Plan</title>
         <link rel="stylesheet" href="Styles/admin.css"/>
         <link rel="stylesheet" href="Styles/modificarSocios.css"/>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -78,10 +78,6 @@
 
         </script>
 
-        <script>
-            // Deshabilitar el <select> después de seleccionar la opción
-            document.getElementById("miSelect").disabled = true;
-        </script>
     </head>
     <body>
         <div class="masthead">
@@ -101,19 +97,19 @@
                     <input type="hidden" class="my-form-input" name="fol" value="${socio.fol}">
 
                     <label for="Nom" class="my-form-label">Nombre:</label>
-                    <input type="text" autocomplete="off" name="Nom" value="${socio.nom}" class="my-form-input" required>
+                    <input type="text" autocomplete="off" name="Nom" value="${socio.nom}" class="my-form-input" required readonly>
 
                     <label for="Eda" class="my-form-label">Edad:</label>
-                    <input type="text" autocomplete="off" name="Eda" class="my-form-input" value="${socio.eda}" required>
+                    <input type="text" autocomplete="off" name="Eda" class="my-form-input" value="${socio.eda}" required readonly>
 
                     <label for="Tel" class="my-form-label">Telefono:</label>
-                    <input type="text" autocomplete="off" name="Tel" value="${socio.tel}" class="my-form-input" required>
+                    <input type="text" autocomplete="off" name="Tel" value="${socio.tel}" class="my-form-input" required readonly>
 
                     <label for="CorElec" class="my-form-label">Email:</label>
-                    <input type="text" autocomplete="off" name="CorElec" class="my-form-input" value="${socio.corElec}" required>
+                    <input type="text" autocomplete="off" name="CorElec" class="my-form-input" value="${socio.corElec}" required readonly>
 
-                    <label for="NumPlan" class="my-form-label" hidden >Seleccionar Plan:</label>
-                    <select name="NumPlan" class="my-form-input" required hidden>
+                    <label for="NumPlan" class="my-form-label">Seleccionar Plan:</label>
+                    <select name="NumPlan" class="my-form-input" required>
                         <c:forEach var="plan" items="${listaPlanes}">
                             <c:choose>
                                 <c:when test="${socio.numPlan eq plan.numPlan}">
@@ -127,13 +123,13 @@
                     </select>
 
                     <label for="fecha" class="my-form-label" >Fecha de inicio:</label>
-                    <input type="date" class="my-form-input" value="${socio.inp}" id="fecha" name="fecha" readonly required>
+                    <input type="date" class="my-form-input" value="${socio.inp}" id="fecha" name="fecha" required>
 
                     <label for="fechaOut" class="my-form-label">Fecha de Termino:</label>
-                    <input type="date" class="my-form-input" id="fechaOut" name="fechaOut" readonly >
+                    <input type="date" class="my-form-input" id="fechaOut" name="fechaOut" readonly>
 
 
-                    <button type="submit" class="my-form-button" name="action" value="modificar">Modificar Socio</button>
+                    <button type="submit" class="my-form-button" name="action" value="modificarPlan">Modificar Socio</button>
                 </form>
             </div>
         </div>
