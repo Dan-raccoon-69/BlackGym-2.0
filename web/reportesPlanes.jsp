@@ -1,8 +1,9 @@
 <%-- 
-    Document   : reportes
-    Created on : 11 dic. 2023, 16:43:32
+    Document   : reportesPlanes
+    Created on : 1 ene. 2024, 15:14:01
     Author     : Daniel
 --%>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,7 +12,7 @@
         <meta charset="utf-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="favicon.ico">
-        <title>Reporte Productos</title>
+        <title>Reporte Planes</title>
         <link rel="stylesheet" href="Styles/planes.css"/>
         <link rel="stylesheet" href="Styles/admin.css"/>
         <link rel="stylesheet" href="Styles/style.css"/>
@@ -85,8 +86,8 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th class="left">Num VPr</th>
-                                        <th>Cantidad P.</th>
+                                        <th class="left">Num VPl</th>
+                                        <th>fol</th>
                                         <th>Descripción</th>
                                         <th>Costo</th>
                                         <th>Fecha</th>

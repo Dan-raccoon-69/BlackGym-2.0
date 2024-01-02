@@ -172,7 +172,7 @@
                 <div class="menu-item submenu">
                     <a href="VentasController?action=verReporte"><i class="icono"></i> Reportes</a>
                     <div class="submenu-content">
-                        <a href="VentasController?action=verReporte"><i class="icono"></i> Planes</a>
+                        <a href="VentasController?action=verReportePlanes"><i class="icono"></i> Planes</a>
                         <a href="VentasController?action=verReporte"><i class="icono"></i> Productos</a>
                     </div>
                 </div>

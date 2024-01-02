@@ -61,10 +61,17 @@ public class VentasController extends HttpServlet {
                 rd = request.getRequestDispatcher("/ventas.jsp");
                 rd.forward(request, response);
                 break;
+            // verReporteProductos
             case "verReporte":
                 verTodasLasVentas(request, response);
                 // Redirigir a la página de agregar
                 rd = request.getRequestDispatcher("/reportes.jsp");
+                rd.forward(request, response);
+                break;
+            case "verReportePlanes":
+                //verTodasLasVentas(request, response);
+                // Redirigir a la página de agregar
+                rd = request.getRequestDispatcher("/reportesPlanes.jsp");
                 rd.forward(request, response);
                 break;
             case "fechas":
@@ -132,7 +139,8 @@ public class VentasController extends HttpServlet {
             VentasDao venta = new VentasDao();
             ventasTotales = venta.obtenerTodasLasVentas();
             Double costosEfe = 0.0;
-            Double costosTar = 0.0;
+            Double costosTarDeb = 0.0;
+            Double costosTarCre = 0.0;
             Double costosTot = 0.0;
             for (Ventas ventas : ventasTotales) {
                 // Asegúrate de que toda.getFecV() devuelve un java.sql.Date
@@ -144,18 +152,21 @@ public class VentasController extends HttpServlet {
                     ventasFiltradas.add(ventas);
                     if (ventas.getForP().equals("Efectivo")) {
                         costosEfe += ventas.getCosV();
-                    } else if (ventas.getForP().equals("Tarjeta")) {
-                        costosTar += ventas.getCosV();
-                    }
+                    } else if (ventas.getForP().equals("Tarjeta Debito")) {
+                        costosTarDeb += ventas.getCosV();
+                    } else if (ventas.getForP().equals("Tarjeta Credito")) {
+                        costosTarCre += ventas.getCosV();
+                    } 
                 }
             }
 
-            costosTot = costosEfe + costosTar;
+            costosTot = costosEfe + costosTarDeb + costosTarCre;
 
             // compartimos la variable ultimas, para poder acceder la vista con Expression Language
             request.setAttribute("todas", ventasFiltradas);
             request.setAttribute("costosEfe", costosEfe);
-            request.setAttribute("costosTar", costosTar);
+            request.setAttribute("costosTarDeb", costosTarDeb);
+            request.setAttribute("costosTarCre", costosTarCre);
             request.setAttribute("costosTot", costosTot);
             request.setAttribute("fechaI", fechaI);
             request.setAttribute("fechaF", fechaF);
@@ -173,21 +184,26 @@ public class VentasController extends HttpServlet {
         VentasDao venta = new VentasDao();
         todas = venta.obtenerTodasLasVentas();
         Double costosEfe = 0.0;
-        Double costosTar = 0.0;
+        Double costosTarDeb = 0.0;
+        Double costosTarCre = 0.0;
         Double costosTot = 0.0;
         for (Ventas toda : todas) {
+            System.out.println(toda.getForP());
             if (toda.getForP().equals("Efectivo")) {
                 costosEfe += toda.getCosV();
-            } else if (toda.getForP().equals("Tarjeta")) {
-                costosTar += toda.getCosV();
+            } else if (toda.getForP().equals("Tarjeta Debito")) {
+                costosTarDeb += toda.getCosV();
+            } else if (toda.getForP().equals("Tarjeta Credito")) {
+                costosTarCre += toda.getCosV();
             }
         }
-        costosTot = costosEfe + costosTar;
+        costosTot = costosEfe + costosTarDeb + costosTarCre;
         RequestDispatcher rd;
         // compartimos la variable ultimas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);
         request.setAttribute("costosEfe", costosEfe);
-        request.setAttribute("costosTar", costosTar);
+        request.setAttribute("costosTarDeb", costosTarDeb);
+        request.setAttribute("costosTarCre", costosTarCre);
         request.setAttribute("costosTot", costosTot);
         // enviamos respuesta, se renderiza a la vista "index.jsp"
         rd = request.getRequestDispatcher("/reportes.jsp");
@@ -199,10 +215,6 @@ public class VentasController extends HttpServlet {
         List<Producto> todas = new LinkedList<>();
         ProductoDao producto = new ProductoDao();
         todas = producto.obtenerTodosLosProductos();
-        System.out.println("SOCIOS DESDE CONTROLLER");
-        for (Producto toda : todas) {
-            System.out.println(toda.toString());
-        }
         RequestDispatcher rd;
         // compartimos la variable ultimas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);

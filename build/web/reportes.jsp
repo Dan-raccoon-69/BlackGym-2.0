@@ -11,7 +11,7 @@
         <meta charset="utf-8">    
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="favicon.ico">
-        <title>Socios</title>
+        <title>Reporte Productos</title>
         <link rel="stylesheet" href="Styles/planes.css"/>
         <link rel="stylesheet" href="Styles/admin.css"/>
         <link rel="stylesheet" href="Styles/style.css"/>
@@ -29,7 +29,7 @@
                     <ul class="nav nav-justified">
                         <li><a href="PlanesController?action=inicio">Inicio</a></li>            
                         <li><a href="PlanesController?action=verPlanes">Planes</a></li>                        
-                        <li><a href="#">Productos</a></li>            
+                        <li><a href="ProductosController?action=verProductos">Productos</a></li>            
                     </ul>
                 </nav>
             </div>
@@ -47,8 +47,13 @@
                         </div>
 
                         <div class="Tarjeta">
-                            <p>Tarjeta: </p>
-                            <p><b>  $ ${costosTar} </b></p>
+                            <p>Tarjeta Debito: </p>
+                            <p><b>  $ ${costosTarDeb} </b></p>
+                        </div>
+                        
+                        <div class="Tarjeta">
+                            <p>Tarjeta Credito: </p>
+                            <p><b>  $ ${costosTarCre} </b></p>
                         </div>
 
                         <div class="Total">
@@ -80,7 +85,7 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th class="left">Folio</th>
+                                        <th class="left">Num VPr</th>
                                         <th>Cantidad P.</th>
                                         <th>Descripción</th>
                                         <th>Costo</th>

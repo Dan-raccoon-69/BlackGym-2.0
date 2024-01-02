@@ -145,8 +145,8 @@ ${producto},
                         -->
                         <select class="my-form-input" name="ForP">
                             <option value="Efectivo">Efectivo</option>
-                            <option value="Tarjeta Debito">Tarjeta de Débito</option>
-                            <option value="Tarjeta Credito">Tarjeta de Crédito</option>
+                            <option value="Tarjeta Debito">Tarjeta de Debito</option>
+                            <option value="Tarjeta Credito">Tarjeta de Credito</option>
                         </select>
 
                         <button type="submit" class="my-form-button" name="action" value="insertar">Agregar Venta</button>
