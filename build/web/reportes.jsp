@@ -29,7 +29,7 @@
                     <ul class="nav nav-justified">
                         <li><a href="PlanesController?action=inicio">Inicio</a></li>            
                         <li><a href="PlanesController?action=verPlanes">Planes</a></li>                        
-                        <li><a href="ProductosController?action=verProductos">Productos</a></li>            
+                        <li><a href="VentasController?action=verReportePlanes">R. Planes</a></li>            
                     </ul>
                 </nav>
             </div>

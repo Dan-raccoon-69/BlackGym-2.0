@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -172,7 +173,7 @@ public class SociosController extends HttpServlet {
             verTodosLosSocios(request, response);
 
         } else if ("modificar".equals(action)) {
-
+            RequestDispatcher dispatcher;
             int Fol = Integer.parseInt(request.getParameter("fol"));
             String nombreParametro = request.getParameter("Nom");
             String edadParametro = request.getParameter("Eda");
@@ -234,7 +235,89 @@ public class SociosController extends HttpServlet {
                 mensaje = "Ocurrió un error, el socio no fue modificado.";
                 System.out.println(mensaje);
             }
-            verTodosLosSocios(request, response);
+
+            //verTodosLosSocios(request, response);
+        } else if ("modificarPlan".equals(action)) {
+            RequestDispatcher dispatcher;
+            int Fol = Integer.parseInt(request.getParameter("fol"));
+            String nombreParametro = request.getParameter("Nom");
+            String edadParametro = request.getParameter("Eda");
+            String TelParametro = request.getParameter("Tel");
+            String CorElecParametro = request.getParameter("CorElec");
+            int numPlanParametro = Integer.parseInt(request.getParameter("NumPlan"));
+            //int NumParametro = Integer.parseInt(request.getParameter("Num"));
+            String CalParametro = request.getParameter("Cal");
+            String ColParametro = request.getParameter("Col");
+            String CpParametro = request.getParameter("Cp");
+            String EntParametro = request.getParameter("Ent");
+            String EstParametro = request.getParameter("Est");
+
+            // Obtener los parámetros como String desde la solicitud
+            String fechaString = request.getParameter("fecha");
+            String fechaOutString = request.getParameter("fechaOut");
+
+            // Convertir los String a objetos Date
+            Date fecha = null;
+            Date fechaOut = null;
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                if (fechaString != null && !fechaString.isEmpty()) {
+                    fecha = dateFormat.parse(fechaString);
+                }
+
+                if (fechaOutString != null && !fechaOutString.isEmpty()) {
+                    fechaOut = dateFormat.parse(fechaOutString);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                // Manejar la excepción de análisis aquí
+            }
+
+            Socio socioModificado = new Socio(Fol);
+            socioModificado.setNom(nombreParametro);
+            socioModificado.setEda(edadParametro);
+            socioModificado.setTel(TelParametro);
+            socioModificado.setCorElec(CorElecParametro);
+            socioModificado.setNumPlan(numPlanParametro);
+            socioModificado.setCol(ColParametro);
+            socioModificado.setCp(CpParametro);
+            socioModificado.setCal(CalParametro);
+            socioModificado.setEnt(EntParametro);
+            socioModificado.setEst(EstParametro);
+            socioModificado.setFip(fechaOut);
+            socioModificado.setInp(fecha);
+
+            SociosDao socioDao = new SociosDao();
+            boolean resultado = socioDao.actualizarSocio(socioModificado);
+
+            String mensaje = "";
+            if (resultado) {
+                mensaje = "El socio fue modificado correctamente.";
+                System.out.println(mensaje);
+                // Colocar la lista en el alcance de solicitud
+                request.setAttribute("Fol", Fol);
+                request.setAttribute("nombreParametro", nombreParametro);
+                request.setAttribute("numPlanParametro", numPlanParametro);
+
+                // costo
+                PlanesDao planesDao = new PlanesDao();
+                Planes planEscogido = planesDao.obtenerPlanPorNumero(numPlanParametro);
+                double costoPlan = planEscogido.getP();
+                request.setAttribute("costoPlan", costoPlan);
+                LocalDate fechaActual = LocalDate.now();
+                request.setAttribute("fechaActual", fechaActual);
+
+                // VENTA
+                // Redirigir a la página de modificación
+                dispatcher = request.getRequestDispatcher("/agregarVentas.jsp");
+                dispatcher.forward(request, response);
+
+            } else {
+                mensaje = "Ocurrió un error, el socio no fue modificado.";
+                System.out.println(mensaje);
+            }
         }
     }
 
@@ -260,10 +343,6 @@ public class SociosController extends HttpServlet {
         List<Socio> todas = new LinkedList<>();
         SociosDao socio = new SociosDao();
         todas = socio.obtenerTodosLosSocios();
-        System.out.println("SOCIOS DESDE CONTROLLER");
-        for (Socio toda : todas) {
-            System.out.println(toda.toString());
-        }
         RequestDispatcher rd;
         // compartimos la variable ultimas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);

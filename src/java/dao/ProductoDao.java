@@ -18,6 +18,7 @@ import java.util.List;
  * @author Daniel
  */
 public class ProductoDao {
+
     public static final String url = "jdbc:mysql://localhost:3306/gym";
     public static final String usuario = "root";
     public static final String contraseña = "616263646566676869";
@@ -66,7 +67,7 @@ public class ProductoDao {
             return null;
         }
     }
-    
+
     public boolean insertar(Producto producto) {
         String sql = "insert into productos (NomProd, DesProd, Exi, CosProdu) values (?, ?, ?, ?)";
 
@@ -84,7 +85,7 @@ public class ProductoDao {
             return false;
         }
     }
-    
+
     public boolean actualizarProducto(Producto producto) {
         String sql = "UPDATE productos SET NomProd=?, DesProd=?, Exi=?, CosProdu=? WHERE NumProd = ?";
 
@@ -101,7 +102,7 @@ public class ProductoDao {
             return false;
         }
     }
-    
+
     public Producto obtenerProductoPorFolio(int NumProd) {
         try {
             Connection conn = getConnection();
@@ -124,6 +125,42 @@ public class ProductoDao {
         }
         return null; // Devuelve null si no se encuentra ningún socio con el folio dado
     }
-    
-    
+
+    public int obtenerExistenciasEnStock(int numProd) {
+        int existenciasEnStock = 0;
+
+        try (Connection conn = getConnection()) {
+            String sql = "SELECT Exi FROM productos WHERE NumProd = ?";
+
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                statement.setInt(1, numProd);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        existenciasEnStock = resultSet.getInt("Exi");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Manejar la excepción según tus necesidades
+        }
+
+        return existenciasEnStock;
+    }
+
+    public void actualizarExistenciasEnStock(int numProd, int nuevasExistencias) {
+        try (Connection conn = getConnection()) {
+            String sql = "UPDATE productos SET Exi = ? WHERE NumProd = ?";
+
+            try (PreparedStatement statement = conn.prepareStatement(sql)) {
+                statement.setInt(1, nuevasExistencias);
+                statement.setInt(2, numProd);
+
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Manejar la excepción según tus necesidades
+        }
+    }
+
 }

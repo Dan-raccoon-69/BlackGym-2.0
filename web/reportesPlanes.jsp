@@ -29,8 +29,8 @@
                 <nav>
                     <ul class="nav nav-justified">
                         <li><a href="PlanesController?action=inicio">Inicio</a></li>            
-                        <li><a href="PlanesController?action=verPlanes">Planes</a></li>                        
-                        <li><a href="ProductosController?action=verProductos">Productos</a></li>            
+                        <li><a href="SociosController?action=verSocios">Socios</a></li>                        
+                        <li><a href="VentasController?action=verReporte">R. Productos</a></li>            
                     </ul>
                 </nav>
             </div>
@@ -80,15 +80,15 @@
                                 <!--  
                                 <div><a href="VentasController?action=fechas" style="border-radius: 10px"><i class="icono"></i> Ver </a></div>
                                 -->
-                                <button type="submit" class="my-form-button" name="action" value="Ver">Ver</button>
+                                <button type="submit" class="my-form-button" name="action" value="VerVentasPlanes">Ver</button>
                             </form>
 
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th class="left">Num VPl</th>
-                                        <th>fol</th>
-                                        <th>Descripción</th>
+                                        <th>Folio Socio</th>
+                                        <th>Num. Plan</th>
                                         <th>Costo</th>
                                         <th>Fecha</th>
                                         <th>Hora</th>
@@ -99,10 +99,10 @@
 
                                     <c:forEach items="${todas}" var="venta" varStatus="status">
                                         <tr> 
-                                            <td>${venta.getFolV()}</td>
-                                            <td>${venta.getCanP()}</td>
-                                            <td>${venta.getDesV()}</td>
-                                            <td>${venta.getCosV()}</td>
+                                            <td>${venta.getNumVenta()}</td>
+                                            <td>${venta.getFol()}</td>
+                                            <td>${venta.getNum_Plan()}</td>
+                                            <td>${venta.getCosP()}</td>
                                             <td>${venta.getFecV()}</td>
                                             <td>${venta.getHor()}</td>
                                             <td>${venta.getForP()}</td>

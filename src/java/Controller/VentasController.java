@@ -6,8 +6,10 @@ package Controller;
 
 import Modelo.Producto;
 import Modelo.Ventas;
+import Modelo.VentasPlanes;
 import dao.ProductoDao;
 import dao.VentasDao;
+import dao.VentasPlanesDao;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -43,6 +45,13 @@ public class VentasController extends HttpServlet {
         String mensaje = "";
         switch (action) {
             case "agregarVentas":
+                /*
+                session = request.getSession(true);
+                List<String> carrito = (List<String>) session.getAttribute("carrito");
+                List<Producto> productosCarrito = (List<Producto>) session.getAttribute("productosCarrito");
+                carrito.clear();
+                productosCarrito.clear();
+                */
                 this.verTodosLosProductos(request, response);
                 LocalDate fechaActual = LocalDate.now();
                 // Colocar la lista en el alcance de solicitud  
@@ -55,7 +64,7 @@ public class VentasController extends HttpServlet {
                 request.setAttribute("cantidadProductos", cantidadProductos);
                 request.setAttribute("carrito", carrito);
                 request.setAttribute("precio", precio);
-                */
+                 */
                 request.setAttribute("fechaActual", fechaActual);
                 // Redirigir a la página de agregar
                 rd = request.getRequestDispatcher("/ventas.jsp");
@@ -69,7 +78,7 @@ public class VentasController extends HttpServlet {
                 rd.forward(request, response);
                 break;
             case "verReportePlanes":
-                //verTodasLasVentas(request, response);
+                verTodasLasVentasDePlanes(request, response);
                 // Redirigir a la página de agregar
                 rd = request.getRequestDispatcher("/reportesPlanes.jsp");
                 rd.forward(request, response);
@@ -121,6 +130,13 @@ public class VentasController extends HttpServlet {
             if (resultado) {
                 mensaje = "La venta fue agregada correctamente.";
                 System.out.println(mensaje);
+                HttpSession session;
+                session = request.getSession(true);
+                List<String> carrito = (List<String>) session.getAttribute("carrito");
+                List<Producto> productosCarrito = (List<Producto>) session.getAttribute("productosCarrito");
+                carrito.clear();
+                productosCarrito.clear();
+                
             } else {
                 mensaje = "Ocurrió un error, la venta no fue agregada.";
                 System.out.println(mensaje);
@@ -156,7 +172,7 @@ public class VentasController extends HttpServlet {
                         costosTarDeb += ventas.getCosV();
                     } else if (ventas.getForP().equals("Tarjeta Credito")) {
                         costosTarCre += ventas.getCosV();
-                    } 
+                    }
                 }
             }
 
@@ -173,13 +189,90 @@ public class VentasController extends HttpServlet {
             // enviamos respuesta, se renderiza a la vista "index.jsp"
             rd = request.getRequestDispatcher("/reportes.jsp");
             rd.forward(request, response);
+        } else if ("insertarVentaPlan".equals(action)) {
+
+            int folioSocio = Integer.parseInt(request.getParameter("fol"));
+            String nomSocio = request.getParameter("nomSo");
+            int numPlan = Integer.parseInt(request.getParameter("numPlan"));
+            double CosPlan = Double.valueOf(request.getParameter("CosPlan"));
+            String FecV = request.getParameter("FecV");
+            String ForP = request.getParameter("ForP");
+            LocalTime horaActual = LocalTime.now();
+
+            // Crear un objeto Ventas y establecer los valores
+            VentasPlanes venta = new VentasPlanes(0);
+            venta.setFol(folioSocio);
+            venta.setNum_Plan(numPlan);
+            venta.setCosP(CosPlan);
+            venta.setFecV(java.sql.Date.valueOf(FecV));
+            venta.setHor(horaActual);
+            venta.setForP(ForP);
+
+            VentasPlanesDao ventaDao = new VentasPlanesDao();
+            boolean resultado = ventaDao.insertar(venta);
+
+            String mensaje = "";
+            if (resultado) {
+                mensaje = "La venta de plan fue agregada correctamente.";
+                System.out.println(mensaje);
+            } else {
+                mensaje = "Ocurrió un error, la venta de plan no fue agregada.";
+                System.out.println(mensaje);
+            }
+            verTodasLasVentasDePlanes(request, response);
+        } else if ("VerVentasPlanes".equals(action)) {
+            RequestDispatcher rd;
+            String fechaIni = request.getParameter("fechaIni");
+            String fechaFin = request.getParameter("fechaFin");
+
+            LocalDate fechaI = LocalDate.parse(fechaIni);
+            LocalDate fechaF = LocalDate.parse(fechaFin);
+
+            List<VentasPlanes> ventasTotales = new LinkedList<>();
+            List<VentasPlanes> ventasFiltradas = new LinkedList<>();
+            VentasPlanesDao venta = new VentasPlanesDao();
+            ventasTotales = venta.obtenerTodasLasVentasDePlanes();
+            Double costosEfe = 0.0;
+            Double costosTarDeb = 0.0;
+            Double costosTarCre = 0.0;
+            Double costosTot = 0.0;
+            for (VentasPlanes ventas : ventasTotales) {
+                // Asegúrate de que toda.getFecV() devuelve un java.sql.Date
+                java.sql.Date fechaVenta = (java.sql.Date) ventas.getFecV();
+                // Convertir la fecha de la venta a LocalDate
+                LocalDate fechaVentaLocalDate = fechaVenta.toLocalDate();
+
+                if (fechaVentaLocalDate.isAfter(fechaI) && fechaVentaLocalDate.isBefore(fechaF)) {
+                    ventasFiltradas.add(ventas);
+                    if (ventas.getForP().equals("Efectivo")) {
+                        costosEfe += ventas.getCosP();
+                    } else if (ventas.getForP().equals("Tarjeta Debito")) {
+                        costosTarDeb += ventas.getCosP();
+                    } else if (ventas.getForP().equals("Tarjeta Credito")) {
+                        costosTarCre += ventas.getCosP();
+                    }
+                }
+            }
+
+            costosTot = costosEfe + costosTarDeb + costosTarCre;
+
+            // compartimos la variable ultimas, para poder acceder la vista con Expression Language
+            request.setAttribute("todas", ventasFiltradas);
+            request.setAttribute("costosEfe", costosEfe);
+            request.setAttribute("costosTarDeb", costosTarDeb);
+            request.setAttribute("costosTarCre", costosTarCre);
+            request.setAttribute("costosTot", costosTot);
+            request.setAttribute("fechaI", fechaI);
+            request.setAttribute("fechaF", fechaF);
+            // enviamos respuesta, se renderiza a la vista "index.jsp"
+            rd = request.getRequestDispatcher("/reportesPlanes.jsp");
+            rd.forward(request, response);
         }
 
     }
 
     protected void verTodasLasVentas(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         List<Ventas> todas = new LinkedList<>();
         VentasDao venta = new VentasDao();
         todas = venta.obtenerTodasLasVentas();
@@ -188,7 +281,6 @@ public class VentasController extends HttpServlet {
         Double costosTarCre = 0.0;
         Double costosTot = 0.0;
         for (Ventas toda : todas) {
-            System.out.println(toda.getForP());
             if (toda.getForP().equals("Efectivo")) {
                 costosEfe += toda.getCosV();
             } else if (toda.getForP().equals("Tarjeta Debito")) {
@@ -207,6 +299,38 @@ public class VentasController extends HttpServlet {
         request.setAttribute("costosTot", costosTot);
         // enviamos respuesta, se renderiza a la vista "index.jsp"
         rd = request.getRequestDispatcher("/reportes.jsp");
+        rd.forward(request, response);
+    }
+
+    protected void verTodasLasVentasDePlanes(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        List<VentasPlanes> todas = new LinkedList<>();
+        VentasPlanesDao venta = new VentasPlanesDao();
+        todas = venta.obtenerTodasLasVentasDePlanes();
+        Double costosEfe = 0.0;
+        Double costosTarDeb = 0.0;
+        Double costosTarCre = 0.0;
+        Double costosTot = 0.0;
+        for (VentasPlanes toda : todas) {
+            if (toda.getForP().equals("Efectivo")) {
+                costosEfe += toda.getCosP();
+            } else if (toda.getForP().equals("Tarjeta Debito")) {
+                costosTarDeb += toda.getCosP();
+            } else if (toda.getForP().equals("Tarjeta Credito")) {
+                costosTarCre += toda.getCosP();
+            }
+        }
+        costosTot = costosEfe + costosTarDeb + costosTarCre;
+        RequestDispatcher rd;
+        // compartimos la variable ultimas, para poder acceder la vista con Expression Language
+        request.setAttribute("todas", todas);
+        request.setAttribute("costosEfe", costosEfe);
+        request.setAttribute("costosTarDeb", costosTarDeb);
+        request.setAttribute("costosTarCre", costosTarCre);
+        request.setAttribute("costosTot", costosTot);
+        // enviamos respuesta, se renderiza a la vista "index.jsp"
+        rd = request.getRequestDispatcher("/reportesPlanes.jsp");
         rd.forward(request, response);
     }
 

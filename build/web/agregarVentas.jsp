@@ -38,18 +38,31 @@
                 <form class="my-custom-form" method="post" action="VentasController">
 
                     <label for="fol" class="my-form-label">Folio Cliente:</label>
-                    <input type="number" autocomplete="off" name="fol" class="my-form-input" value="" readonly required>
-                    
-                    <label for="DesProd" class="my-form-label">Descripción:</label>
-                    <textarea id="id" name="DesProd" style="resize: none" rows="10" cols="15" required class="my-form-input"></textarea>
-                    
-                    <label for="Exi" class="my-form-label">Existencias:</label>
-                    <input type="number" autocomplete="off" name="Exi" class="my-form-input" required>
+                    <input type="number" autocomplete="off" name="fol" class="my-form-input" value="${Fol}" readonly required>
 
-                    <label for="CosProdu" class="my-form-label">Precio:</label>
-                    <input type="number" autocomplete="off" name="CosProdu" class="my-form-input" required>
-                    
-                    <button type="submit" class="my-form-button" name="action" value="insertarVenta">Agregar Producto</button>
+                    <label for="nomSo" class="my-form-label">Nombre Cliente:</label>
+                    <input type="text" autocomplete="off" name="nomSo" class="my-form-input" value="${nombreParametro}" readonly required>
+
+                    <label for="numPlan" class="my-form-label">Num Plan:</label>
+                    <input type="number" autocomplete="off" name="numPlan" class="my-form-input" value="${numPlanParametro}" readonly required>
+
+                    <label for="CosPlan" class="my-form-label">Precio Plan:</label>
+                    <input type="number" autocomplete="off" name="CosPlan" class="my-form-input" value="${costoPlan}" required readonly>
+
+                    <label for="FecV" class="my-form-label">Fecha Venta: </label>
+                    <input type="date" class="my-form-input" value="${fechaActual}" name="FecV" readonly required>
+
+                    <label for="ForP" class="my-form-label">Forma de Pago</label>
+                    <!-- 
+                    <input type="text" class="my-form-input" name="ForP" autocomplete="off">
+                    -->
+                    <select class="my-form-input" name="ForP">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Tarjeta Debito">Tarjeta de Debito</option>
+                        <option value="Tarjeta Credito">Tarjeta de Credito</option>
+                    </select>
+
+                    <button type="submit" class="my-form-button" name="action" value="insertarVentaPlan">Agregar Producto</button>
                 </form>
 
 

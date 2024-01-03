@@ -129,7 +129,7 @@
                     <input type="date" class="my-form-input" id="fechaOut" name="fechaOut" readonly>
 
 
-                    <button type="submit" class="my-form-button" name="action" value="modificarPlan">Modificar Socio</button>
+                    <button type="submit" class="my-form-button" name="action" value="modificarPlan">Modificar Plan</button>
                 </form>
             </div>
         </div>

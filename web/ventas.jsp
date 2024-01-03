@@ -44,22 +44,6 @@
         </script>
 
         <script>
-            function validarNumeroPositivo(input) {
-                // Eliminar cualquier caracter no numérico
-                input.value = input.value.replace(/[^0-9]/g, '');
-
-                // Obtener el valor actual como un número
-                var valor = parseInt(input.value, 10);
-
-                // Validar si el número es negativo o cero
-                if (isNaN(valor) || valor <= 0) {
-                    alert("Por favor, ingrese un número positivo mayor que cero.");
-                    input.value = "";  // Limpiar el campo
-                }
-            }
-        </script>
-
-        <script>
             // Agregar un event listener para el evento input
             document.getElementById('numeroDecimal').addEventListener('input', function () {
                 // Obtener el valor del campo de entrada
