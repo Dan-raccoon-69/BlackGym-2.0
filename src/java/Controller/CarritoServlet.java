@@ -64,6 +64,11 @@ public class CarritoServlet extends HttpServlet {
             // Agregar el producto al carrito
             productosCarrito.add(p1);
             carrito.add(p1.getNomProd());
+        } else if("limpiar".equals(accion)){
+            cantidadProductos = 0;
+            double precio = 0.0;
+            session.setAttribute("precio", precio);
+            session.setAttribute("cantidadProductos", cantidadProductos);
         }
 
         double precio = 0.0;

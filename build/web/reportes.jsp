@@ -88,7 +88,7 @@
                                         <th class="left">Num VPr</th>
                                         <th>Cantidad P.</th>
                                         <th>Descripción</th>
-                                        <th>Costo</th>
+                                        <th>Precio</th>
                                         <th>Fecha</th>
                                         <th>Hora</th>
                                         <th>F. Pago</th>

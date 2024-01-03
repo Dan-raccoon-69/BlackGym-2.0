@@ -56,7 +56,7 @@
                         case '3':
                             fechaTermino = new Date(fechaInicial);
                             fechaTermino.setMonth(fechaTermino.getMonth() + 3);
-                            break;
+                            break;       
                         default:
                             // Si el tipo de plan no se reconoce, no hacemos nada
                             console.log("No se encontro");

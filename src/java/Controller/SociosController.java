@@ -120,7 +120,7 @@ public class SociosController extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("insertar".equals(action)) {
-
+            RequestDispatcher dispatcher;
             String nombreParametro = request.getParameter("Nom");
             String edadParametro = request.getParameter("Eda");
             String TelParametro = request.getParameter("Tel");
@@ -166,6 +166,25 @@ public class SociosController extends HttpServlet {
             if (resultado) {
                 mensaje = "El usuario fue insertado correctamente.";
                 System.out.println(mensaje);
+                int Fol = socioDao.obtenerFolPorNombre(nombreParametro);
+                // Colocar la lista en el alcance de solicitud
+                request.setAttribute("Fol", Fol);
+                request.setAttribute("nombreParametro", nombreParametro);
+                request.setAttribute("numPlanParametro", numPlanParametro);
+                request.setAttribute("CorElecParametro", CorElecParametro);
+                
+                // costo
+                PlanesDao planesDao = new PlanesDao();
+                Planes planEscogido = planesDao.obtenerPlanPorNumero(numPlanParametro);
+                double costoPlan = planEscogido.getP();
+                request.setAttribute("costoPlan", costoPlan);
+                LocalDate fechaActual = LocalDate.now();
+                request.setAttribute("fechaActual", fechaActual);
+
+                // VENTA
+                // Redirigir a la página de modificación
+                dispatcher = request.getRequestDispatcher("/agregarVentas.jsp");
+                dispatcher.forward(request, response);
             } else {
                 mensaje = "Ocurrió un error, el usuario no fue agregado.";
                 System.out.println(mensaje);
@@ -236,7 +255,7 @@ public class SociosController extends HttpServlet {
                 System.out.println(mensaje);
             }
 
-            //verTodosLosSocios(request, response);
+            verTodosLosSocios(request, response);
         } else if ("modificarPlan".equals(action)) {
             RequestDispatcher dispatcher;
             int Fol = Integer.parseInt(request.getParameter("fol"));

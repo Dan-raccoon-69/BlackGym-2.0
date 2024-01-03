@@ -165,7 +165,7 @@ public class SociosDao {
             return false;
         }
     }
-    
+
     public boolean insertar(Socio socio) {
         String sql = "insert into socios (Nom, Eda, Tel, CorElec, NumPlan, Inp, FiP) values (?, ?, ?, ?, ?, ?, ?)";
 
@@ -177,7 +177,7 @@ public class SociosDao {
             ps.setString(3, socio.getTel());
             ps.setString(4, socio.getCorElec());
             ps.setInt(5, socio.getNumPlan());
-            
+
             // Obtén las fechas de tu objeto socioModificado
             Date fechaInp = socio.getInp();
             Date fechaFip = socio.getFip();
@@ -189,7 +189,7 @@ public class SociosDao {
             // Luego, establece las fechas en el PreparedStatement
             ps.setDate(6, sqlFechaInp);
             ps.setDate(7, sqlFechaFip);
-            
+
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -229,6 +229,23 @@ public class SociosDao {
             System.out.println(ex.getMessage());
             return null;
         }
+    }
+
+    public int obtenerFolPorNombre(String nombreSocio) {
+        try {
+            Connection conn = getConnection();
+            String sql = "SELECT fol FROM socios WHERE Nom = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, nombreSocio);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("fol");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1; // Devuelve -1 si no se encuentra ningún socio con el nombre dado
     }
 
 }

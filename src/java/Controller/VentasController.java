@@ -11,11 +11,14 @@ import dao.ProductoDao;
 import dao.VentasDao;
 import dao.VentasPlanesDao;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Base64;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,6 +30,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import javax.servlet.ServletOutputStream;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 
 /**
  *
@@ -51,7 +61,7 @@ public class VentasController extends HttpServlet {
                 List<Producto> productosCarrito = (List<Producto>) session.getAttribute("productosCarrito");
                 carrito.clear();
                 productosCarrito.clear();
-                */
+                 */
                 this.verTodosLosProductos(request, response);
                 LocalDate fechaActual = LocalDate.now();
                 // Colocar la lista en el alcance de solicitud  
@@ -88,6 +98,25 @@ public class VentasController extends HttpServlet {
                 // Redirigir a la página de agregar
                 rd = request.getRequestDispatcher("/reportes.jsp");
                 rd.forward(request, response);
+                break;
+            case "descargarTicket":
+                String numVenta = request.getParameter("numVenta");
+
+                VentasPlanesDao ventasPlanesDao = new VentasPlanesDao();
+                // Obtener la venta por el número de venta (numVenta) desde tu lógica de negocio
+                VentasPlanes venta = ventasPlanesDao.obtenerVentaPorNumero(numVenta);
+
+                // Configurar la respuesta para la descarga
+                response.setContentType("application/pdf");
+                response.setHeader("Content-Disposition", "attachment; filename=Ticket_Venta_" + numVenta + ".pdf");
+
+                // Escribir el contenido del ticket en el flujo de salida de la respuesta
+                try (ServletOutputStream outputStream = response.getOutputStream()) {
+                    generatePdf(outputStream, venta);
+                }
+                break;
+            case "enviarPorCorreo":
+
                 break;
 
             default:
@@ -136,7 +165,7 @@ public class VentasController extends HttpServlet {
                 List<Producto> productosCarrito = (List<Producto>) session.getAttribute("productosCarrito");
                 carrito.clear();
                 productosCarrito.clear();
-                
+
             } else {
                 mensaje = "Ocurrió un error, la venta no fue agregada.";
                 System.out.println(mensaje);
@@ -197,6 +226,8 @@ public class VentasController extends HttpServlet {
             double CosPlan = Double.valueOf(request.getParameter("CosPlan"));
             String FecV = request.getParameter("FecV");
             String ForP = request.getParameter("ForP");
+            //String CorElecParametro = request.getParameter("CorElecParametro");
+            //request.setAttribute("CorElecParametro", CorElecParametro);
             LocalTime horaActual = LocalTime.now();
 
             // Crear un objeto Ventas y establecer los valores
@@ -342,6 +373,49 @@ public class VentasController extends HttpServlet {
         RequestDispatcher rd;
         // compartimos la variable ultimas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);
+    }
+
+    private void generatePdf(OutputStream outputStream, VentasPlanes venta) throws IOException {
+        Document document = new Document(PageSize.A5, 20, 20, 20, 20); // Tamaño de página A5
+
+        try {
+            PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+            document.open();
+
+            // Añadir el logo de la empresa
+            String absolutePath = getServletContext().getRealPath("/WEB-INF/logo2.png");
+            Image logo = Image.getInstance(absolutePath);
+
+            // Añadir el nombre de la empresa
+            Font companyFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK);
+            Paragraph companyName = new Paragraph("BlackGym", companyFont);
+            companyName.setAlignment(Element.ALIGN_CENTER);
+            document.add(companyName);
+
+            // Añadir un título al documento
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
+            Paragraph title = new Paragraph("Ticket de Venta", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
+
+            // Agregar contenido al PDF
+            document.add(new Paragraph("Detalle de Venta - Número " + venta.getNumVenta()));
+            document.add(new Paragraph("Folio del Socio: " + venta.getFol()));
+            // Puedes agregar más detalles según tus necesidades
+
+            // Añadir la ubicación o cualquier otro detalle
+            Font locationFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.GRAY);
+            Paragraph location = new Paragraph("Ubicación: Ciudad, País", locationFont);
+            location.setAlignment(Element.ALIGN_CENTER);
+            document.add(location);
+
+            // Puedes añadir más elementos al documento según tus necesidades
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } finally {
+            document.close();
+            outputStream.close();
+        }
     }
 
 }

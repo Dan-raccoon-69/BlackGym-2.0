@@ -36,7 +36,9 @@
         <div class="main-content">
             <div class="custom-form-container">
                 <form class="my-custom-form" method="post" action="VentasController">
-
+                    
+                    <input type="text" hidden autocomplete="off" name="nomSo" class="my-form-input" value="${CorElecParametro}" readonly required>
+                    
                     <label for="fol" class="my-form-label">Folio Cliente:</label>
                     <input type="number" autocomplete="off" name="fol" class="my-form-input" value="${Fol}" readonly required>
 
@@ -62,7 +64,7 @@
                         <option value="Tarjeta Credito">Tarjeta de Credito</option>
                     </select>
 
-                    <button type="submit" class="my-form-button" name="action" value="insertarVentaPlan">Agregar Producto</button>
+                    <button type="submit" class="my-form-button" name="action" value="insertarVentaPlan">Agregar Venta</button>
                 </form>
 
 

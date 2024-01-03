@@ -1,0 +1,22 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 3 ene. 2024, 15:00:28
+    Author     : Daniel
+*/
+
+body .imprimir,
+body .enviar{
+    width: 65%;
+    background-color: #3498db;
+    color: #fff;
+    padding: 3px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 5px 0;
+    text-align: center;
+    text-transform: capitalize;
+}

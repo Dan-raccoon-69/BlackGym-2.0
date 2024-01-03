@@ -19,13 +19,14 @@ import java.util.List;
  * @author Daniel
  */
 public class VentasPlanesDao {
+
     public static final String url = "jdbc:mysql://localhost:3306/gym";
     public static final String usuario = "root";
     public static final String contraseña = "616263646566676869";
 
     PreparedStatement ps;
     ResultSet rs;
-    
+
     // Método para obtener la conexión
     private Connection getConnection() {
         try {
@@ -41,7 +42,7 @@ public class VentasPlanesDao {
             return null;
         }
     }
-    
+
     public boolean insertar(VentasPlanes venta) {
         String sql = "insert into VentasPlanes (fol, Num_Plan, CosP, FecV, Hor, ForP) values (?, ?, ?, ?, ?, ?)";
 
@@ -54,7 +55,7 @@ public class VentasPlanesDao {
             ps.setDate(4, new Date(venta.getFecV().getTime())); // Convirtiendo LocalDate a Date
             ps.setString(5, venta.getHor().toString()); // Convirtiendo LocalTime a String
             ps.setString(6, venta.getForP());
-            
+
             ps.executeUpdate();
             return true;
         } catch (SQLException ex) {
@@ -62,7 +63,7 @@ public class VentasPlanesDao {
             return false;
         }
     }
-    
+
     public List<VentasPlanes> obtenerTodasLasVentasDePlanes() {
         try {
             Connection conn = getConnection();
@@ -90,5 +91,32 @@ public class VentasPlanesDao {
             return null;
         }
     }
-    
+
+    public VentasPlanes obtenerVentaPorNumero(String numVenta) {
+        try {
+            Connection conn = getConnection();
+            String sql = "select * from VentasPlanes where NumVenta = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, numVenta);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                VentasPlanes venta = new VentasPlanes(rs.getInt("NumVenta"));
+                venta.setFol(Integer.parseInt(rs.getString("fol")));
+                venta.setNum_Plan(Integer.parseInt(rs.getString("Num_Plan")));
+                venta.setCosP(Double.valueOf(rs.getString("CosP")));
+                venta.setFecV(rs.getDate("FecV"));
+                venta.setHor(rs.getTime("Hor").toLocalTime());
+                venta.setForP(rs.getString("ForP"));
+
+                return venta;
+            } else {
+                return null; // No se encontró la venta con el número de venta especificado
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
 }

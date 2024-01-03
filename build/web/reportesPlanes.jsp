@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="Styles/planes.css"/>
         <link rel="stylesheet" href="Styles/admin.css"/>
         <link rel="stylesheet" href="Styles/style.css"/>
+        <link rel="stylesheet" href="Styles/botones.css"/>
         <link rel="stylesheet" href="Styles/modificarSocios.css"/>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -89,26 +90,29 @@
                                         <th class="left">Num VPl</th>
                                         <th>Folio Socio</th>
                                         <th>Num. Plan</th>
-                                        <th>Costo</th>
+                                        <th>Precio</th>
                                         <th>Fecha</th>
                                         <th>Hora</th>
                                         <th>F. Pago</th>
+                                        <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <c:forEach items="${todas}" var="venta" varStatus="status">
                                         <tr> 
                                             <td>${venta.getNumVenta()}</td>
                                             <td>${venta.getFol()}</td>
                                             <td>${venta.getNum_Plan()}</td>
                                             <td>${venta.getCosP()}</td>
-                                            <td>${venta.getFecV()}</td>
+                                            <td>${venta.getFecV()}</td> 
                                             <td>${venta.getHor()}</td>
                                             <td>${venta.getForP()}</td>
-                                        </tr>
+                                            <td>
+                                                <a class="imprimir"  href="VentasController?action=descargarTicket&numVenta=${venta.getNumVenta()}">Descargar Ticket</a>
+                                                <a class="enviar"  href="VentasController?action=enviarPorCorreo&numVenta=${venta.getNumVenta()}&Fol=${venta.getFol()}">Enviar por Correo</a>
+                                            </td>
+                                            </tr>
                                     </c:forEach>
-
                                 </tbody> 
                             </table>
                         </div>

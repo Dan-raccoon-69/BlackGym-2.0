@@ -73,7 +73,7 @@
         <div class="container-max">
             <div class="custom-panel custom-panel-default">
                 <div class="custom-panel-body">
-                    <table class="custom-table custom-table-striped">
+                    <table class="custom-table custom-table-striped">        
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -134,6 +134,7 @@ ${producto},
                         </select>
 
                         <button type="submit" class="my-form-button" name="action" value="insertar">Agregar Venta</button>
+                        
                     </form>
                 </div>
             </div>
