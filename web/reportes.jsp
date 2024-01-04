@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="Styles/planes.css"/>
         <link rel="stylesheet" href="Styles/admin.css"/>
         <link rel="stylesheet" href="Styles/style.css"/>
+        <link rel="stylesheet" href="Styles/botones.css"/>
         <link rel="stylesheet" href="Styles/modificarSocios.css"/>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -85,26 +86,38 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <!--  
                                         <th class="left">Num VPr</th>
-                                        <th>Cantidad P.</th>
+                                        -->
+                                        <th>Cantidad</th>
                                         <th>Descripción</th>
                                         <th>Precio</th>
                                         <th>Fecha</th>
+                                        <!--  
                                         <th>Hora</th>
+                                        -->
                                         <th>F. Pago</th>
+                                        <th>Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <c:forEach items="${todas}" var="venta" varStatus="status">
-                                        <tr> 
+                                        <tr>
+                                            <!-- 
                                             <td>${venta.getFolV()}</td>
+                                            -->
                                             <td>${venta.getCanP()}</td>
                                             <td>${venta.getDesV()}</td>
                                             <td>${venta.getCosV()}</td>
                                             <td>${venta.getFecV()}</td>
+                                            <!--
                                             <td>${venta.getHor()}</td>
+                                            -->
                                             <td>${venta.getForP()}</td>
+                                            <td>
+                                                <a class="imprimir imprimir-reporte"  href="VentasController?action=descargarTicketProductos&numVenta=${venta.getFolV()}">Descargar Ticket</a>
+                                            </td>
                                         </tr>
                                     </c:forEach>
 

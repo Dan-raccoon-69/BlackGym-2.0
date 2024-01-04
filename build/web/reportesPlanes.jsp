@@ -108,7 +108,7 @@
                                             <td>${venta.getHor()}</td>
                                             <td>${venta.getForP()}</td>
                                             <td>
-                                                <a class="imprimir"  href="VentasController?action=descargarTicket&numVenta=${venta.getNumVenta()}">Descargar Ticket</a>
+                                                <a class="imprimir"  href="VentasController?action=descargarTicket&numVenta=${venta.getNumVenta()}&Fol=${venta.getFol()}">Descargar Ticket</a>
                                                 <a class="enviar"  href="VentasController?action=enviarPorCorreo&numVenta=${venta.getNumVenta()}&Fol=${venta.getFol()}">Enviar por Correo</a>
                                             </td>
                                             </tr>

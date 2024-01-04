@@ -4,7 +4,9 @@
  */
 package Controller;
 
+import Modelo.Planes;
 import Modelo.Producto;
+import Modelo.Socio;
 import Modelo.Ventas;
 import Modelo.VentasPlanes;
 import dao.ProductoDao;
@@ -37,6 +39,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import javax.servlet.ServletOutputStream;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import dao.PlanesDao;
+import dao.SociosDao;
 
 /**
  *
@@ -105,14 +109,14 @@ public class VentasController extends HttpServlet {
                 VentasPlanesDao ventasPlanesDao = new VentasPlanesDao();
                 // Obtener la venta por el número de venta (numVenta) desde tu lógica de negocio
                 VentasPlanes venta = ventasPlanesDao.obtenerVentaPorNumero(numVenta);
-
+                int FolSocio = Integer.parseInt(request.getParameter("Fol"));
                 // Configurar la respuesta para la descarga
                 response.setContentType("application/pdf");
                 response.setHeader("Content-Disposition", "attachment; filename=Ticket_Venta_" + numVenta + ".pdf");
 
                 // Escribir el contenido del ticket en el flujo de salida de la respuesta
                 try (ServletOutputStream outputStream = response.getOutputStream()) {
-                    generatePdf(outputStream, venta);
+                    generatePdf(outputStream, venta, FolSocio);
                 }
                 break;
             case "enviarPorCorreo":
@@ -375,8 +379,8 @@ public class VentasController extends HttpServlet {
         request.setAttribute("todas", todas);
     }
 
-    private void generatePdf(OutputStream outputStream, VentasPlanes venta) throws IOException {
-        Document document = new Document(PageSize.A5, 20, 20, 20, 20); // Tamaño de página A5
+    private void generatePdf(OutputStream outputStream, VentasPlanes venta, int FolSocio) throws IOException {
+        Document document = new Document(PageSize.A6, 20, 20, 20, 20); // Tamaño de página A6
 
         try {
             PdfWriter writer = PdfWriter.getInstance(document, outputStream);
@@ -385,29 +389,50 @@ public class VentasController extends HttpServlet {
             // Añadir el logo de la empresa
             String absolutePath = getServletContext().getRealPath("/WEB-INF/logo2.png");
             Image logo = Image.getInstance(absolutePath);
+            // Ajustar el tamaño de la imagen
+            logo.scaleToFit(80, 80); // Ajusta los valores según sea necesario
 
-            // Añadir el nombre de la empresa
-            Font companyFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14, BaseColor.BLACK);
-            Paragraph companyName = new Paragraph("BlackGym", companyFont);
-            companyName.setAlignment(Element.ALIGN_CENTER);
-            document.add(companyName);
+            logo.setAlignment(Element.ALIGN_CENTER);
+            document.add(logo);
+            
+            // Dirección
+            Font addressFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.GRAY);
+            Paragraph address = new Paragraph("Carr. Federal Pachuca - Mexico 68, Fuentes de San Cristobal, 55040 Ecatepec de Morelos, Méx.", addressFont);
+            address.setAlignment(Element.ALIGN_CENTER);
+            document.add(address);
 
             // Añadir un título al documento
-            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, BaseColor.BLACK);
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
             Paragraph title = new Paragraph("Ticket de Venta", titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
+            
             // Agregar contenido al PDF
-            document.add(new Paragraph("Detalle de Venta - Número " + venta.getNumVenta()));
-            document.add(new Paragraph("Folio del Socio: " + venta.getFol()));
-            // Puedes agregar más detalles según tus necesidades
+            document.add(new Paragraph("Venta - Número: " + venta.getNumVenta()));
 
-            // Añadir la ubicación o cualquier otro detalle
-            Font locationFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.GRAY);
-            Paragraph location = new Paragraph("Ubicación: Ciudad, País", locationFont);
-            location.setAlignment(Element.ALIGN_CENTER);
-            document.add(location);
+            // Datos de la venta
+            document.add(new Paragraph("Fecha Venta: " + venta.getFecV() + "   Hora: " + venta.getHor()));
+            document.add(new Paragraph("Folio del Socio: " + venta.getFol()));
+            PlanesDao planesDao = new PlanesDao();
+            Planes plan = planesDao.obtenerPlanPorNumero(venta.getNum_Plan());
+            String nomPlan = plan.getNom();
+            document.add(new Paragraph("Número de Plan: " + venta.getNum_Plan() + " - " + nomPlan));
+            document.add(new Paragraph("Precio: $" + venta.getCosP()));
+            document.add(new Paragraph("Forma de Pago: " + venta.getForP()));
+
+            // Datos del socio
+            SociosDao socioDao = new SociosDao();
+            Socio socio = socioDao.obtenerSocioPorFolio(FolSocio);
+            document.add(new Paragraph("Socio: " + socio.getNom()));
+            document.add(new Paragraph("Inicio Plan: " + socio.getInp()));
+            document.add(new Paragraph("Fin de Plan: " + socio.getFip()));
+
+            
+            Font addressFont2 = FontFactory.getFont(FontFactory.HELVETICA, 11, BaseColor.GRAY);
+            Paragraph address2 = new Paragraph("\n\n ¡GRACIAS POR SU COMPRA!", addressFont2);
+            address2.setAlignment(Element.ALIGN_CENTER);
+            document.add(address2);
 
             // Puedes añadir más elementos al documento según tus necesidades
         } catch (DocumentException e) {
