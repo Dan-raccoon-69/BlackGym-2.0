@@ -113,7 +113,7 @@
                         -->
                         <textarea id="id" name="DesV" style="resize: none; font-family: sans-serif" readonly rows="10" cols="15" required class="my-form-input">
                             <c:forEach items="${carrito}" var="producto">
-${producto},
+${producto}
                             </c:forEach>
                         </textarea>
 

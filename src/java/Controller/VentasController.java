@@ -41,6 +41,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import dao.PlanesDao;
 import dao.SociosDao;
+import java.util.Iterator;
 
 /**
  *
@@ -122,7 +123,21 @@ public class VentasController extends HttpServlet {
             case "enviarPorCorreo":
 
                 break;
+            case "descargarTicketProductos":
+                String FolV = request.getParameter("numVenta");
 
+                VentasDao ventasDao = new VentasDao();
+                // Obtener la venta por el número de venta (numVenta) desde tu lógica de negocio
+                Ventas venta2 = ventasDao.obtenerVentaProductosPorNumero(FolV);
+                // Configurar la respuesta para la descarga
+                response.setContentType("application/pdf");
+                response.setHeader("Content-Disposition", "attachment; filename=Ticket_Venta_Productos" + FolV + ".pdf");
+                int folV = Integer.parseInt(request.getParameter("numVenta"));
+                // Escribir el contenido del ticket en el flujo de salida de la respuesta
+                try (ServletOutputStream outputStream = response.getOutputStream()) {
+                    generatePdfProductos(outputStream, venta2, folV);
+                }
+                break;
             default:
                 throw new AssertionError();
         }
@@ -394,7 +409,7 @@ public class VentasController extends HttpServlet {
 
             logo.setAlignment(Element.ALIGN_CENTER);
             document.add(logo);
-            
+
             // Dirección
             Font addressFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.GRAY);
             Paragraph address = new Paragraph("Carr. Federal Pachuca - Mexico 68, Fuentes de San Cristobal, 55040 Ecatepec de Morelos, Méx.", addressFont);
@@ -407,7 +422,6 @@ public class VentasController extends HttpServlet {
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
-            
             // Agregar contenido al PDF
             document.add(new Paragraph("Venta - Número: " + venta.getNumVenta()));
 
@@ -428,7 +442,63 @@ public class VentasController extends HttpServlet {
             document.add(new Paragraph("Inicio Plan: " + socio.getInp()));
             document.add(new Paragraph("Fin de Plan: " + socio.getFip()));
 
-            
+            Font addressFont2 = FontFactory.getFont(FontFactory.HELVETICA, 11, BaseColor.GRAY);
+            Paragraph address2 = new Paragraph("\n\n ¡GRACIAS POR SU COMPRA!", addressFont2);
+            address2.setAlignment(Element.ALIGN_CENTER);
+            document.add(address2);
+
+            // Puedes añadir más elementos al documento según tus necesidades
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } finally {
+            document.close();
+            outputStream.close();
+        }
+    }
+
+    private void generatePdfProductos(OutputStream outputStream, Ventas venta, int FolV) throws IOException {
+        Document document = new Document(PageSize.A6, 15, 15, 15, 15); // Tamaño de página A6
+
+        try {
+            PdfWriter writer = PdfWriter.getInstance(document, outputStream);
+            document.open();
+
+            // Añadir el logo de la empresa
+            String absolutePath = getServletContext().getRealPath("/WEB-INF/logo2.png");
+            Image logo = Image.getInstance(absolutePath);
+            // Ajustar el tamaño de la imagen
+            logo.scaleToFit(80, 80); // Ajusta los valores según sea necesario
+
+            logo.setAlignment(Element.ALIGN_CENTER);
+            document.add(logo);
+
+            // Dirección
+            Font addressFont = FontFactory.getFont(FontFactory.HELVETICA, 12, BaseColor.GRAY);
+            Paragraph address = new Paragraph("Carr. Federal Pachuca - Mexico 68, Fuentes de San Cristobal, 55040 Ecatepec de Morelos, Méx.", addressFont);
+            address.setAlignment(Element.ALIGN_CENTER);
+            document.add(address);
+
+            // Añadir un título al documento
+            Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16, BaseColor.BLACK);
+            Paragraph title = new Paragraph("Ticket de Venta", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            document.add(title);
+
+            // Agregar contenido al PDF
+            document.add(new Paragraph("Venta - Número: " + venta.getFolV()));
+            document.add(new Paragraph("Fecha Venta: " + venta.getFecV() + "   Hora: " + venta.getHor()));
+            String descripV = venta.getDesV();
+            // Eliminar espacios y saltos de línea al principio y al final del String
+            String trimmedInput = descripV.trim();
+            trimmedInput = trimmedInput.trim();
+            // Eliminar todas las comas de la cadena
+            trimmedInput = trimmedInput.replaceAll(",", "");
+            // Reemplazar múltiples saltos de línea consecutivos con uno solo
+            String result = trimmedInput.replaceAll("(\n\\s*)+", "\n");
+            document.add(new Paragraph("\nProductos:" + "\n"+ result));
+            document.add(new Paragraph("\nPrecio: $" + venta.getCosV()));
+            document.add(new Paragraph("Forma de Pago: " + venta.getForP()));
+
             Font addressFont2 = FontFactory.getFont(FontFactory.HELVETICA, 11, BaseColor.GRAY);
             Paragraph address2 = new Paragraph("\n\n ¡GRACIAS POR SU COMPRA!", addressFont2);
             address2.setAlignment(Element.ALIGN_CENTER);

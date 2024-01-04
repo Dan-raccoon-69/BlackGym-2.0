@@ -91,5 +91,32 @@ public class VentasDao {
         }
     }
     
-    
+    public Ventas obtenerVentaProductosPorNumero(String FolV) {
+        try {
+            Connection conn = getConnection();
+            String sql = "select * from Ventas where FolV = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, FolV);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Ventas venta = new Ventas(rs.getInt("FolV"));
+                venta = new Ventas(rs.getInt("FolV"));
+                venta.setCanP(Integer.parseInt(rs.getString("CanP")));
+                venta.setDesV(rs.getString("DesV"));
+                venta.setCosV(Double.valueOf(rs.getString("CosV")));
+                venta.setFecV(rs.getDate("FecV"));
+                venta.setHor(rs.getTime("Hor").toLocalTime());
+                venta.setForP(rs.getString("ForP"));
+
+                return venta;
+            } else {
+                return null; // No se encontró la venta con el número de venta especificado
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+   
 }
