@@ -41,7 +41,6 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import dao.PlanesDao;
 import dao.SociosDao;
-import java.util.Iterator;
 
 /**
  *
@@ -495,7 +494,7 @@ public class VentasController extends HttpServlet {
             trimmedInput = trimmedInput.replaceAll(",", "");
             // Reemplazar múltiples saltos de línea consecutivos con uno solo
             String result = trimmedInput.replaceAll("(\n\\s*)+", "\n");
-            document.add(new Paragraph("\nProductos:" + "\n"+ result));
+            document.add(new Paragraph("\nProductos:" + "\n" + result));
             document.add(new Paragraph("\nPrecio: $" + venta.getCosV()));
             document.add(new Paragraph("Forma de Pago: " + venta.getForP()));
 
