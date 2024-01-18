@@ -142,7 +142,7 @@ public class ProductoDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Manejar la excepción según tus necesidades
+            e.printStackTrace(); 
         }
 
         return existenciasEnStock;
@@ -159,7 +159,7 @@ public class ProductoDao {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Manejar la excepción según tus necesidades
+            e.printStackTrace();
         }
     }
 

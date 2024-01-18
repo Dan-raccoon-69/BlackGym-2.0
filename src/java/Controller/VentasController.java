@@ -14,18 +14,10 @@ import dao.VentasDao;
 import dao.VentasPlanesDao;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Base64;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +30,6 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import javax.servlet.ServletOutputStream;
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
 import dao.PlanesDao;
 import dao.SociosDao;
 
@@ -59,47 +50,28 @@ public class VentasController extends HttpServlet {
         String mensaje = "";
         switch (action) {
             case "agregarVentas":
-                /*
-                session = request.getSession(true);
-                List<String> carrito = (List<String>) session.getAttribute("carrito");
-                List<Producto> productosCarrito = (List<Producto>) session.getAttribute("productosCarrito");
-                carrito.clear();
-                productosCarrito.clear();
-                 */
                 this.verTodosLosProductos(request, response);
                 LocalDate fechaActual = LocalDate.now();
-                // Colocar la lista en el alcance de solicitud  
-                /*
-                int cantidadProductos = 0;
-                String carrito = "";
-                double precio = 0;
-                
-                
-                request.setAttribute("cantidadProductos", cantidadProductos);
-                request.setAttribute("carrito", carrito);
-                request.setAttribute("precio", precio);
-                 */
                 request.setAttribute("fechaActual", fechaActual);
-                // Redirigir a la página de agregar
+                // Redirigir a la página de agregar ventas
                 rd = request.getRequestDispatcher("/ventas.jsp");
                 rd.forward(request, response);
                 break;
             // verReporteProductos
             case "verReporte":
                 verTodasLasVentas(request, response);
-                // Redirigir a la página de agregar
+                // Redirigir a la página de reportes productos
                 rd = request.getRequestDispatcher("/reportes.jsp");
                 rd.forward(request, response);
                 break;
             case "verReportePlanes":
                 verTodasLasVentasDePlanes(request, response);
-                // Redirigir a la página de agregar
+                // Redirigir a la página de reportes planes
                 rd = request.getRequestDispatcher("/reportesPlanes.jsp");
                 rd.forward(request, response);
                 break;
             case "fechas":
                 verTodasLasVentas(request, response);
-                // Redirigir a la página de agregar
                 rd = request.getRequestDispatcher("/reportes.jsp");
                 rd.forward(request, response);
                 break;
@@ -206,7 +178,6 @@ public class VentasController extends HttpServlet {
             Double costosTarCre = 0.0;
             Double costosTot = 0.0;
             for (Ventas ventas : ventasTotales) {
-                // Asegúrate de que toda.getFecV() devuelve un java.sql.Date
                 java.sql.Date fechaVenta = (java.sql.Date) ventas.getFecV();
                 // Convertir la fecha de la venta a LocalDate
                 LocalDate fechaVentaLocalDate = fechaVenta.toLocalDate();
@@ -225,7 +196,7 @@ public class VentasController extends HttpServlet {
 
             costosTot = costosEfe + costosTarDeb + costosTarCre;
 
-            // compartimos la variable ultimas, para poder acceder la vista con Expression Language
+            // compartimos las variables, para poder visualizarlas en la vista con Expression Language
             request.setAttribute("todas", ventasFiltradas);
             request.setAttribute("costosEfe", costosEfe);
             request.setAttribute("costosTarDeb", costosTarDeb);
@@ -233,7 +204,6 @@ public class VentasController extends HttpServlet {
             request.setAttribute("costosTot", costosTot);
             request.setAttribute("fechaI", fechaI);
             request.setAttribute("fechaF", fechaF);
-            // enviamos respuesta, se renderiza a la vista "index.jsp"
             rd = request.getRequestDispatcher("/reportes.jsp");
             rd.forward(request, response);
         } else if ("insertarVentaPlan".equals(action)) {
@@ -244,8 +214,6 @@ public class VentasController extends HttpServlet {
             double CosPlan = Double.valueOf(request.getParameter("CosPlan"));
             String FecV = request.getParameter("FecV");
             String ForP = request.getParameter("ForP");
-            //String CorElecParametro = request.getParameter("CorElecParametro");
-            //request.setAttribute("CorElecParametro", CorElecParametro);
             LocalTime horaActual = LocalTime.now();
 
             // Crear un objeto Ventas y establecer los valores
@@ -286,9 +254,7 @@ public class VentasController extends HttpServlet {
             Double costosTarCre = 0.0;
             Double costosTot = 0.0;
             for (VentasPlanes ventas : ventasTotales) {
-                // Asegúrate de que toda.getFecV() devuelve un java.sql.Date
                 java.sql.Date fechaVenta = (java.sql.Date) ventas.getFecV();
-                // Convertir la fecha de la venta a LocalDate
                 LocalDate fechaVentaLocalDate = fechaVenta.toLocalDate();
 
                 if (fechaVentaLocalDate.isAfter(fechaI) && fechaVentaLocalDate.isBefore(fechaF)) {
@@ -305,7 +271,6 @@ public class VentasController extends HttpServlet {
 
             costosTot = costosEfe + costosTarDeb + costosTarCre;
 
-            // compartimos la variable ultimas, para poder acceder la vista con Expression Language
             request.setAttribute("todas", ventasFiltradas);
             request.setAttribute("costosEfe", costosEfe);
             request.setAttribute("costosTarDeb", costosTarDeb);
@@ -313,7 +278,6 @@ public class VentasController extends HttpServlet {
             request.setAttribute("costosTot", costosTot);
             request.setAttribute("fechaI", fechaI);
             request.setAttribute("fechaF", fechaF);
-            // enviamos respuesta, se renderiza a la vista "index.jsp"
             rd = request.getRequestDispatcher("/reportesPlanes.jsp");
             rd.forward(request, response);
         }
@@ -340,13 +304,11 @@ public class VentasController extends HttpServlet {
         }
         costosTot = costosEfe + costosTarDeb + costosTarCre;
         RequestDispatcher rd;
-        // compartimos la variable ultimas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);
         request.setAttribute("costosEfe", costosEfe);
         request.setAttribute("costosTarDeb", costosTarDeb);
         request.setAttribute("costosTarCre", costosTarCre);
         request.setAttribute("costosTot", costosTot);
-        // enviamos respuesta, se renderiza a la vista "index.jsp"
         rd = request.getRequestDispatcher("/reportes.jsp");
         rd.forward(request, response);
     }
@@ -372,13 +334,11 @@ public class VentasController extends HttpServlet {
         }
         costosTot = costosEfe + costosTarDeb + costosTarCre;
         RequestDispatcher rd;
-        // compartimos la variable ultimas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);
         request.setAttribute("costosEfe", costosEfe);
         request.setAttribute("costosTarDeb", costosTarDeb);
         request.setAttribute("costosTarCre", costosTarCre);
         request.setAttribute("costosTot", costosTot);
-        // enviamos respuesta, se renderiza a la vista "index.jsp"
         rd = request.getRequestDispatcher("/reportesPlanes.jsp");
         rd.forward(request, response);
     }
@@ -389,7 +349,7 @@ public class VentasController extends HttpServlet {
         ProductoDao producto = new ProductoDao();
         todas = producto.obtenerTodosLosProductos();
         RequestDispatcher rd;
-        // compartimos la variable ultimas, para poder acceder la vista con Expression Language
+        // compartimos la variable todas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);
     }
 
@@ -446,7 +406,6 @@ public class VentasController extends HttpServlet {
             address2.setAlignment(Element.ALIGN_CENTER);
             document.add(address2);
 
-            // Puedes añadir más elementos al documento según tus necesidades
         } catch (DocumentException e) {
             e.printStackTrace();
         } finally {
@@ -466,7 +425,7 @@ public class VentasController extends HttpServlet {
             String absolutePath = getServletContext().getRealPath("/WEB-INF/logo2.png");
             Image logo = Image.getInstance(absolutePath);
             // Ajustar el tamaño de la imagen
-            logo.scaleToFit(80, 80); // Ajusta los valores según sea necesario
+            logo.scaleToFit(80, 80);
 
             logo.setAlignment(Element.ALIGN_CENTER);
             document.add(logo);
@@ -502,8 +461,6 @@ public class VentasController extends HttpServlet {
             Paragraph address2 = new Paragraph("\n\n ¡GRACIAS POR SU COMPRA!", addressFont2);
             address2.setAlignment(Element.ALIGN_CENTER);
             document.add(address2);
-
-            // Puedes añadir más elementos al documento según tus necesidades
         } catch (DocumentException e) {
             e.printStackTrace();
         } finally {

@@ -71,7 +71,6 @@ public class PlanesController extends HttpServlet {
     
     private void eliminarPlan(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // se recibe el id del plan que vamos a eliminar
         int idPlan = Integer.parseInt(request.getParameter("NumPlan"));
         PlanesDao pla = new PlanesDao();
         int respuesta = pla.borrarPlan(idPlan);
@@ -92,9 +91,8 @@ public class PlanesController extends HttpServlet {
         PlanesDao plan = new PlanesDao();
         todas = plan.obtenerTodosLosPlanes();
         RequestDispatcher rd;
-        // compartimos la variable ultimas, para poder acceder la vista con Expression Language
+        // compartimos la variable todas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);
-        // enviamos respuesta, se renderiza a la vista "index.jsp"
         rd = request.getRequestDispatcher("/planes.jsp");
         rd.forward(request, response);
     }
@@ -105,7 +103,6 @@ public class PlanesController extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("insertar".equals(action)) {
-            // Lógica para la inserción de un nuevo plan
             String nombreParametro = request.getParameter("nombre");
             String precioParametro = request.getParameter("precio");
             int precio = Integer.parseInt(precioParametro);
@@ -128,7 +125,6 @@ public class PlanesController extends HttpServlet {
             verTodosLosPlanes(request, response);
 
         } else if ("modificar".equals(action)) {
-            // Lógica para la modificación de un plan existente
             int numPlan = Integer.parseInt(request.getParameter("NumPlan"));
             String nombreParametro = request.getParameter("Nom");
             int precio = Integer.parseInt(request.getParameter("P"));

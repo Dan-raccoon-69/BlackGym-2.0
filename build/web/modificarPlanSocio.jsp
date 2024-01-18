@@ -18,7 +18,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" /> 
 
-        <!-- Agrega esto en la sección head de tu HTML -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script>
             $(document).ready(function () {
@@ -135,7 +134,7 @@
         </div>
 
         <footer class="footer">
-            <p>&copy; 2023 BlackGym, The Godfathers.</p>
+            <p>&copy; 2023 BlackGym, Daniel De La Cruz.</p>
         </footer>
 
     </body>

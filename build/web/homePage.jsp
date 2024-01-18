@@ -8,13 +8,11 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
         <title>BlackGYM</title>
-        <!-- Aseg�rate de que Chart.js se est� cargando correctamente -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <!-- Agrega la referencia a jQuery -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <link rel="stylesheet" href="../Styles/homePage.css"/>
         <script>
-            // Funci�n para convertir el formato de fecha a milisegundos
+            // funcion para convertir el formato de fecha a milisegundos
             function convertirFechaAMilisegundos(fechaString) {
                 var meses = {
                     "ene.": 0, "feb.": 1, "mar.": 2, "abr.": 3, "may.": 4, "jun.": 5,
@@ -30,9 +28,9 @@
             }
 
             $(document).ready(function () {
-                // Captura el evento de escribir en el campo de b�squeda
+                // Captura el evento de escribir en el campo de busqueda
                 $("#searchInput").on("input", function () {
-                    // Obt�n el valor del campo de b�squeda
+                    // Obtienen el valor del campo de busqueda
                     var query = $(this).val();
 
                     // Realiza una solicitud AJAX al servidor para obtener sugerencias
@@ -60,7 +58,7 @@
                 $("#suggestionList").on("click", "a", function (event) {
                     event.preventDefault();
 
-                    // Obt�n los datos del enlace clicado
+                    // Obtiene los datos del enlace clicado
                     var selectedSocio = {
                         fol: $(this).data("fol"),
                         Nom: $(this).data("nom"),
@@ -68,11 +66,11 @@
                         Fip: $(this).data("fip")
                     };
 
-                    // Redirecciona a la p�gina deseada con los par�metros del socio
+                    // Redirecciona a la pagina deseada con los parametros del socio
                     window.location.href = "homePage.jsp?nombre=" + encodeURIComponent(selectedSocio.Nom) + "&inp=" + selectedSocio.Inp + "&fip=" + selectedSocio.Fip + "&fol=" + selectedSocio.fol;
                 });
 
-                // Obtiene el elemento canvas despu�s de la redirecci�n
+                // Obtiene el elemento canvas despues de la redireccion
                 var canvas = document.getElementById('progressChart');
 
                 if (canvas) {
@@ -82,7 +80,7 @@
                     if (!ctx) {
                         console.error("No se pudo obtener el contexto 2D del elemento canvas.");
                     } else {
-                        // Configuraci�n del gr�fico
+                        // Configuracion del grafico
                         var startDate = convertirFechaAMilisegundos("${param.inp}");
                         var endDate = convertirFechaAMilisegundos("${param.fip}");
                         var currentDate = new Date().getTime();
@@ -93,13 +91,13 @@
                         console.log('Fecha actual:', new Date(currentDate));
                         console.log('Progreso:', progress);
 
-                        // Actualiza el porcentaje en la interfaz gr�fica
+                        // Actualiza el porcentaje en la interfaz grafica
                         var percentageText = progress >= 100 ? '100%' : progress.toFixed(3) + "%";
                         $("#progressPercentage").text(percentageText);
 
-                        // Configuraci�n del gr�fico
-                        var progressColor = progress >= 100 ? '#9e0404' : '#9e0404';  // Rojo si el progreso es mayor o igual a 100, de lo contrario, rojo
-                        var remainingColor = progress >= 100 ? '#9e0404' : '#6b6b6b';  // Rojo si el progreso es mayor o igual a 100, de lo contrario, gris oscuro
+                        // Configuracion del grafico
+                        var progressColor = progress >= 100 ? '#9e0404' : '#9e0404'; 
+                        var remainingColor = progress >= 100 ? '#9e0404' : '#6b6b6b'; 
 
                         var config = {
                             type: 'doughnut',
@@ -118,11 +116,11 @@
                             }
                         };
 
-                        // Crea el gr�fico
+                        // Crea el grafico
                         new Chart(ctx, config);
                     }
                 } else {
-                    console.error("No se encontr� el elemento canvas con ID 'progressChart'.");
+                    console.error("No se encontro el elemento canvas con ID 'progressChart'.");
                 }
             });
         </script>
@@ -130,7 +128,7 @@
     </head>
     <body>
 
-        <!-- Barra de navegaci�n moderna -->
+        <!-- Barra de navegacion moderna -->
         <nav class="navbar">
             <div class="navbar-left">
                 <img src="img/LogoBlackGym-removebg-preview.png" alt="Logo de BlackGym" class="logo">
@@ -146,7 +144,7 @@
                 </div>
             </div>
 
-            <!-- Agregamos el bot�n de hamburguesa para dispositivos m�viles -->
+            <!-- Agregamos el boton de hamburguesa para dispositivos moviles -->
             <div class="burger-menu" onclick="toggleSidebar()">
                 <div class="bar"></div>
                 <div class="bar"></div>

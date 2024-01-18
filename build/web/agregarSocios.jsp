@@ -18,9 +18,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" /> 
 
-        <!-- Agrega esto en la sección head de tu HTML -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <!-- Agrega estos enlaces en el encabezado de tu HTML -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17/dist/sweetalert2.all.min.js"></script>
         <script>
@@ -88,14 +86,14 @@
                     return false;
                 }
 
-                // Validación de Teléfono (puedes personalizar según tus requisitos)
+                // Validación de Telefono
                 var telefonoRegex = /^[0-9]{10}$/; // Ejemplo: 1234567890
                 if (!telefono.match(telefonoRegex)) {
                     mostrarAlerta("Por favor, ingrese un número de teléfono válido.");
                     return false;
                 }
 
-                // Validación de Email (puedes utilizar una expresión regular más compleja)
+                // Validación de Email
                 var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!email.match(emailRegex)) {
                     mostrarAlerta("Por favor, ingrese una dirección de correo electrónico válida.");
@@ -171,7 +169,7 @@
         </div>
 
         <footer class="footer">
-            <p>&copy; 2023 BlackGym, The Godfathers.</p>
+            <p>&copy; 2023 BlackGym, Daniel De La Cruz.</p>
         </footer>
 
     </body>

@@ -5,11 +5,9 @@ import Modelo.Socio;
 import dao.PlanesDao;
 import dao.SociosDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -49,37 +47,28 @@ public class SociosController extends HttpServlet {
                 planesDao = new PlanesDao();
                 listaPlanes = planesDao.obtenerTodosLosPlanes();
                 LocalDate fechaActual = LocalDate.now();
-                // Colocar la lista en el alcance de solicitud
-
                 request.setAttribute("listaPlanes", listaPlanes);
                 request.setAttribute("fechaActual", fechaActual);
-                // Redirigir a la página de modificación
+                // Redirigir a la página de agregar
                 dispatcher = request.getRequestDispatcher("/agregarSocios.jsp");
                 dispatcher.forward(request, response);
                 break;
             case "modificar":
                 // Obtener el número de socio a modificar desde los parámetros de la solicitud
                 int numFol = Integer.parseInt(request.getParameter("fol"));
-
                 // Obtener el plan de la base de datos usando el PlanDao
                 SociosDao sociosDao = new SociosDao();
                 socio = sociosDao.obtenerSocioPorFolio(numFol);
-
-                // Agregar el plan al request para que la vista pueda acceder a él
                 request.setAttribute("socio", socio);
-
                 planesDao = new PlanesDao();
                 listaPlanes = planesDao.obtenerTodosLosPlanes();
-
                 // Colocar la lista en el alcance de solicitud
                 request.setAttribute("listaPlanes", listaPlanes);
-
                 // Redirigir a la página de modificación
                 dispatcher = request.getRequestDispatcher("/modificarSocio.jsp");
                 dispatcher.forward(request, response);
                 break;
             case "modificarPlanSocio":
-                // Obtener el número de socio a modificar desde los parámetros de la solicitud
                 int numFolS = Integer.parseInt(request.getParameter("fol"));
 
                 // Obtener el plan de la base de datos usando el PlanDao

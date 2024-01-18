@@ -37,7 +37,7 @@ public class UsuarioDao {
             Connection conn = getConnection();
 
             if (conn == null) {
-                // La conexión no se pudo establecer, manejar según sea necesario
+                System.out.println("La conexión no se pudo establecer");
                 return null;
             }
 
@@ -65,7 +65,6 @@ public class UsuarioDao {
 
             return usuario;
         } catch (SQLException ex) {
-            // Manejar la excepción (imprimir o lanzar una nueva)
             ex.printStackTrace();
             return null;
         }

@@ -80,7 +80,7 @@
         </div>
 
         <footer class="footer">
-            <p>&copy; 2023 BlackGym, The Godfathers.</p>
+            <p>&copy; 2023 BlackGym, Daniel De La Cruz.</p>
         </footer>
     </div>
 </body>

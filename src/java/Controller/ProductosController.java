@@ -7,7 +7,6 @@ package Controller;
 import Modelo.Producto;
 import dao.ProductoDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -125,9 +124,9 @@ public class ProductosController extends HttpServlet {
         ProductoDao producto = new ProductoDao();
         todas = producto.obtenerTodosLosProductos();
         RequestDispatcher rd;
-        // compartimos la variable ultimas, para poder acceder la vista con Expression Language
+        // compartimos la variable todas, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);
-        // enviamos respuesta, se renderiza a la vista "index.jsp"
+        // enviamos respuesta, se renderiza a la vista "Productos.jsp"
         rd = request.getRequestDispatcher("/Productos.jsp");
         rd.forward(request, response);
     }

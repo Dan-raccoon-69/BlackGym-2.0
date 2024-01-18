@@ -39,7 +39,7 @@ public class BuscarController extends HttpServlet {
         RequestDispatcher rd;
         // compartimos la variable msg, para poder acceder la vista con Expression Language
         request.setAttribute("todas", todas);
-        // enviamos respuesta, se renderiza a la vista "vacantes.jsp"
+        // enviamos respuesta, se renderiza a la vista "planes.jsp"
         rd = request.getRequestDispatcher("/planes.jsp");
         rd.forward(request, response);
     }

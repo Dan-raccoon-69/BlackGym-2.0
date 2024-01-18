@@ -17,7 +17,6 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" /> 
-        <!-- Agrega estos enlaces en el encabezado de tu HTML -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.17/dist/sweetalert2.all.min.js"></script>
        
@@ -93,7 +92,7 @@ ${producto.desProd}
         </div>
 
         <footer class="footer">
-            <p>&copy; 2023 BlackGym, The Godfathers.</p>
+            <p>&copy; 2023 BlackGym, Daniel De La Cruz.</p>
         </footer>
 
     </body>
