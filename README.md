@@ -32,21 +32,35 @@ Se utilizo el modelo vista controlador (MVC).
 
 ## Capturas de Pantalla
 
-### Interfaz de Usuario Principal
+### Interfaz de logueo
 ![Página de Inicio](.//web/img/Login.png)
 
 ### Interfaz del administrador logueado
 ![Administrador Logueado](.//web/img/admin.png)
 
-### Gestión de Socios
-![Gestión de Socios](url_imagen_gestion_socios.png)
+### Interfaz principal
+![Administrador Listo](.//web/img/Home.png)
 
-### Reportes de Ventas
-![Reportes de Ventas](url_imagen_reportes_ventas.png)
+### Busqueda y recomendaciones de Usuarios
+![Administrador Busqueda Usuarios](.//web/img/busqueda1.png)
+![Administrador Busqueda Usuarios](.//web/img/busqueda2.png)
+
+### Interfaz de Socios y Venta de Planes
+- El formulario contiene ciertas validaciones, una de ellas es el correo:
+    - ![Validación formulario](.//web/img/validacion.png)
+- Agregar Socios
+    - ![Agregar Socios](.//web/img/AgregarSocio.png)
+- Despues de agregar al cliente, se realiza la venta con datos definidos en base al sistema y al cliente
+    - ![Venta de Planes](.//web/img/ventaPlan.png)
+- El administrador solo se encarga de escoger la forma de Pago, los demas datos no se pueden modificar. 
+
+- Si no hay ningun problema, se realiza la venta y aacedemos a la interfaz de Reporte de Venta de Planes
+### Reportes de Venta de Planes
+![Reportes de Ventas de Planes](.//web/img/ReportePlanes.png)
+- Podemos generar el ticket de la venta que acabamos de realizar
 
 ### Generación de Tickets PDF
-![Generación de Tickets](url_imagen_generacion_tickets.png)
-
+![Ticket](.//web/img/ticket.png)
 
 ## Contacto
 ¡Estaria encantado de recibir tus preguntas, comentarios y propuestas de colaboración! No dudes en ponerte en contacto con nosotros a través de los siguientes medios:
