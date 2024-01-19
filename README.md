@@ -54,13 +54,34 @@ Se utilizo el modelo vista controlador (MVC).
     - ![Venta de Planes](.//web/img/ventaPlan.png)
 - El administrador solo se encarga de escoger la forma de Pago, los demas datos no se pueden modificar. 
 
-- Si no hay ningun problema, se realiza la venta y aacedemos a la interfaz de Reporte de Venta de Planes
+- Si no hay ningun problema, se realiza la venta y accedemos a la interfaz de Reporte de Venta de Planes
 ### Reportes de Venta de Planes
 ![Reportes de Ventas de Planes](.//web/img/ReportePlanes.png)
 - Podemos generar el ticket de la venta que acabamos de realizar
 
-### Generación de Tickets PDF
+### Generación de Ticket PDF - Venta de Planes
 ![Ticket](.//web/img/ticket.png)
+
+### Interfaz de Venta de Productos
+- La persona encargada de usar el software puede colocar que productos se venderan
+    - ![Venta de Productos](.//web/img/ventaProductos.png)
+    - ![Venta de Productos](.//web/img/ventaProductos2.png)
+- Al momento de agregar productos, el sistema coloca de manera automatica la cantidad, la descripción, realiza el calculo del costo, asigna la fecha del dia en que se encuentre, la persona encargada solo tendra que colocar la forma de pago del cliente.
+- Si no hay ningun problema, se realiza la venta y accedemos a la interfaz de Reporte de Venta de Productos.
+
+### Reportes de Venta de Productos
+    - ![Reporte de Productos](.//web/img/ReporteProductos.png)
+- De igual forma podemos descargar el ticket de la compra de nuestros productos
+
+### Generación de Ticket PDF - Venta de Productos
+![Ticket](.//web/img/ticketProductos.png)
+
+### Interfaz de Productos
+- Agregar Productos
+  - ![Agregar Productos](.//web/img/agregarProductos.png)
+- Modificar Productos
+  - ![Agregar Productos](.//web/img/verProductos.png)
+  - ![Agregar Productos](.//web/img/modificarProductos.png)
 
 ## Contacto
 ¡Estaria encantado de recibir tus preguntas, comentarios y propuestas de colaboración! No dudes en ponerte en contacto con nosotros a través de los siguientes medios:
