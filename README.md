@@ -70,7 +70,7 @@ Se utilizo el modelo vista controlador (MVC).
 - Si no hay ningun problema, se realiza la venta y accedemos a la interfaz de Reporte de Venta de Productos.
 
 ### Reportes de Venta de Productos
-    - ![Reporte de Productos](.//web/img/ReporteProductos.png)
+![Reportes de Productos](.//web/img/ReporteProductos.png)    
 - De igual forma podemos descargar el ticket de la compra de nuestros productos
 
 ### Generación de Ticket PDF - Venta de Productos
