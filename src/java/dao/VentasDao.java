@@ -21,7 +21,8 @@ import java.util.List;
 public class VentasDao {
     public static final String url = "jdbc:mysql://localhost:3306/gym";
     public static final String usuario = "root";
-    public static final String contraseña = "616263646566676869";
+    /*public static final String contraseña = "616263646566676869";*/
+    public static final String contraseña = "";
 
     PreparedStatement ps;
     ResultSet rs;

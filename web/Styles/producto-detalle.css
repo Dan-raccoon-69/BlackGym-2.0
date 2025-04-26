@@ -1,0 +1,122 @@
+/* Asegura que .detail-layout siempre sea grid, con alta especificidad y !important */
+.detail-body .detail-layout {
+  display: grid !important;
+  grid-template-columns: 2fr 3fr 2fr !important;
+  gap: 30px !important;
+  width: 100% !important;
+}
+
+/* Panel principal */
+.detail-panel {
+  background-color: #222;
+  border: none;
+  margin-top: 20px;
+  
+}
+.detail-body {
+  padding: 30px;
+}
+
+/* Imagen grande */
+.detail-image img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Información central */
+.detail-info {
+  color: #fff;
+}
+.detail-title {
+  font-size: 2rem;
+  color: #e67e22;
+  margin-bottom: 15px;
+}
+.detail-description {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 30px;
+}
+.detail-info .label {
+  font-weight: bold;
+  color: #aaa;
+}
+
+/* Sección de compra */
+.purchase-box {
+  background-color: #333;
+  border-radius: 8px;
+  padding: 20px;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.purchase-box .price {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #e67e22;
+}
+.purchase-box .location,
+.purchase-box .availability {
+  font-size: 0.9rem;
+}
+.btn {
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.add-cart {
+  background-color: #f5a623;
+  color: #000;
+}
+.add-cart:hover {
+  background-color: #d48806;
+}
+.buy-now {
+  background-color: #e74c3c;
+  color: #fff;
+}
+.buy-now:hover {
+  background-color: #c0392b;
+}
+
+/* Información de envío/pago */
+.shipping-info h4 {
+  margin: 10px 0 5px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+.shipping-info p {
+  font-size: 0.85rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+/* Back button */
+.back-button {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  background-color: #e67e22;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.back-button:hover {
+  background-color: #d35400;
+}
+
+/* Responsive: colapsa a 1 columna bajo 900px */
+@media (max-width: 900px) {
+  .detail-body .detail-layout {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+  }
+}
