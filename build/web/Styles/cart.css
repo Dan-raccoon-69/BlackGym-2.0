@@ -1,0 +1,85 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 26 abr. 2025, 17:33:52
+    Author     : gusta
+*/
+
+/* Contenedor general */
+.cart-container {
+    width: 80%;
+    margin: 30px auto;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+}
+/* Tabla de carrito */
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+.cart-table th,
+.cart-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #444;
+    color: #fff;
+}
+.cart-thumb {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+/* Pie de tabla */
+.cart-table tfoot td {
+    font-size: 1.1rem;
+    color: #eee;
+}
+/* Acciones */
+.cart-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+.cart-actions .btn {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+.cart-actions .btn:hover {
+    background-color: #2980b9;
+}
+/* Botón eliminar */
+.remove {
+    color: #e74c3c;
+    text-decoration: none;
+}
+.remove:hover {
+    text-decoration: underline;
+}
+/* Carrito en header */
+.cart-button a {
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+}
+.cart-button .count {
+    position: absolute;
+    top: -5px;
+    right: -8px;
+    background: #e74c3c;
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+}
+
+

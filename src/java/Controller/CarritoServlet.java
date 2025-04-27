@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import Modelo.Producto;
@@ -9,81 +5,121 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Daniel
- */
 public class CarritoServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        // Obtener los parámetros del producto seleccionado
-        String NumProd = request.getParameter("NumProd");
-        String NomProd = request.getParameter("NomProd");
-        Double CosProdu = Double.valueOf(request.getParameter("CosProdu"));
-        String accion = request.getParameter("accion");
-        int cantidadProductos = 0;
+	    throws ServletException, IOException {
+	// Obtener/crear carrito en sesión
+	HttpSession session = request.getSession(true);
+	List<String> carrito = (List<String>) session.getAttribute("carrito");
+	List<Producto> productosCarrito = (List<Producto>) session.getAttribute("productosCarrito");
+	if (carrito == null) {
+	    carrito = new ArrayList<>();
+	    productosCarrito = new ArrayList<>();
+	    session.setAttribute("carrito", carrito);
+	    session.setAttribute("productosCarrito", productosCarrito);
+	}
 
-        Producto p1 = new Producto(0);
-        p1.setNumProd(Integer.parseInt(NumProd));
-        p1.setNomProd((NomProd));
-        p1.setCosProdu(CosProdu);
-        // Obtener o crear la lista de productos en el carrito desde la sesión
-        HttpSession session = request.getSession(true);
-        List<String> carrito = (List<String>) session.getAttribute("carrito");
-        List<Producto> productosCarrito = (List<Producto>) session.getAttribute("productosCarrito");
+	String accion = request.getParameter("accion");
+	String ajax = request.getParameter("ajax");
+	int cantidadProductos = 0;
+	double precioTotal = 0.0;
 
-        if (carrito == null) {
-            carrito = new ArrayList<>();
-            productosCarrito = new ArrayList<>();
-            session.setAttribute("carrito", carrito);
-            session.setAttribute("productosCarrito", productosCarrito);
-        }
+	if ("agregar".equals(accion)) {
+	    // Parámetros producto
+	    int numProd = Integer.parseInt(request.getParameter("NumProd"));
+	    String nomProd = request.getParameter("NomProd");
+	    double cosProd = Double.parseDouble(request.getParameter("CosProdu"));
+	    String image_Url = request.getParameter("image_Url");  // coincide con JS
+	    Producto p = new Producto(0);
+	    p.setNumProd(numProd);
+	    p.setNomProd(nomProd);
+	    p.setCosProdu(cosProd);
+	    p.setImage_url(image_Url);                             // guardas la URL completa
+	    productosCarrito.add(p);
+	    carrito.add(nomProd);
 
-        if ("quitar".equals(accion)) {
-            // Quitar el producto correspondiente del carrito y de productosCarrito
-            carrito.remove(NomProd);
-            Iterator<Producto> iterator = productosCarrito.iterator();
-            while (iterator.hasNext()) {
-                Producto producto = iterator.next();
-                if (producto.getNomProd().equals(NomProd)) {
-                    iterator.remove();
-                    break; // Se puede quitar este break si hay múltiples productos con el mismo nombre
-                }
-            }
-        } else if ("agregar".equals(accion)){
-            // Agregar el producto al carrito
-            productosCarrito.add(p1);
-            carrito.add(p1.getNomProd());
-        } else if("limpiar".equals(accion)){
-            cantidadProductos = 0;
-            double precio = 0.0;
-            session.setAttribute("precio", precio);
-            session.setAttribute("cantidadProductos", cantidadProductos);
-        }
+	    // Recalcular totales
+	    int countThis = 0;
+	    for (Producto prod : productosCarrito) {
+		cantidadProductos++;
+		precioTotal += prod.getCosProdu();
+		if (prod.getNumProd() == numProd) {
+		    countThis++;
+		}
+	    }
+	    session.setAttribute("cantidadProductos", cantidadProductos);
+	    session.setAttribute("precio", precioTotal);
 
-        double precio = 0.0;
-        for (Producto producto : productosCarrito) {
-            cantidadProductos++;
-            precio += producto.getCosProdu();
-        }
-        session.setAttribute("precio", precio);
-        session.setAttribute("cantidadProductos", cantidadProductos);
-        // Redireccionar de nuevo a la vista de Ventas
-        response.sendRedirect("VentasController?action=agregarVentas");
+	    // Si es petición AJAX devolvemos sólo JSON con la cantidad de este producto
+	    if ("true".equals(ajax)) {
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().write("{\"quantity\":" + countThis + "}");
+		return;
+	    }
+	    // Si no es AJAX, redirigimos a la vista del carrito
+	    response.sendRedirect("CarritoServlet?accion=ver");
+	    return;
+	}
+
+	if ("quitar".equals(accion)) {
+	    int numProd = Integer.parseInt(request.getParameter("NumProd"));
+	    String nomProd = request.getParameter("NomProd");
+
+	    // Eliminar de productosCarrito y carrito
+	    Iterator<Producto> it = productosCarrito.iterator();
+	    while (it.hasNext()) {
+		Producto prod = it.next();
+		if (prod.getNumProd() == numProd) {
+		    it.remove();
+		    break;
+		}
+	    }
+	    carrito.remove(nomProd);
+
+	    // Recalcular totales
+	    for (Producto prod : productosCarrito) {
+		cantidadProductos++;
+		precioTotal += prod.getCosProdu();
+	    }
+	    session.setAttribute("cantidadProductos", cantidadProductos);
+	    session.setAttribute("precio", precioTotal);
+
+	    response.sendRedirect("CarritoServlet?accion=ver");
+	    return;
+	}
+
+	if ("limpiar".equals(accion)) {
+	    productosCarrito.clear();
+	    carrito.clear();
+	    session.setAttribute("cantidadProductos", 0);
+	    session.setAttribute("precio", 0.0);
+	    response.sendRedirect("CarritoServlet?accion=ver");
+	    return;
+	}
+
+	if ("ver".equals(accion)) {
+	    // Simplemente despachamos a carrito.jsp para mostrarlo
+	    RequestDispatcher rd = request.getRequestDispatcher("/carrito.jsp");
+	    rd.forward(request, response);
+	    return;
+	}
+
+	// Acción por defecto
+	response.sendRedirect("ProductosController?action=verProductos");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+	    throws ServletException, IOException {
+	doGet(request, response);
     }
-
 }

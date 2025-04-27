@@ -1,0 +1,85 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 26 abr. 2025, 17:03:45
+    Author     : gusta
+*/
+
+/* Modal “Agregaste a tu carrito” */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal.show {
+    display: flex;
+}
+.modal-content {
+    background-color: #222;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.modal-header h4 {
+    font-size: 1.25rem;
+    color: #fff;
+}
+.modal-close {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #aaa;
+}
+.modal-close:hover {
+    color: #fff;
+}
+.modal-body {
+    display: flex;
+    gap: 15px;
+}
+.modal-body img {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+.modal-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.modal-details p {
+    margin: 5px 0;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+.view-cart {
+    text-decoration: none;
+}
+/* Opcional: cerrar modal en móviles */
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 15px;
+        width: 95%;
+    }
+}

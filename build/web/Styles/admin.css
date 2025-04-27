@@ -1,91 +1,91 @@
-/* Reset de estilos para quitar márgenes y padding por defecto */
-* {
-    margin: 0;
-    padding: 0;
-}
+    /* Reset de estilos para quitar márgenes y padding por defecto */
+    * {
+	margin: 0;
+	padding: 0;
+    }
 
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #111; /* Color de fondo oscuro */
-    color: #fff; /* Color de texto claro */
-    font-size: 18px;
-}
+    body {
+	font-family: 'Roboto', sans-serif;
+	background-color: #111; /* Color de fondo oscuro */
+	color: #fff; /* Color de texto claro */
+	font-size: 18px;
+    }
 
-.error {
-    color: red !important;
-}
+    .error {
+	color: red !important;
+    }
 
-.container {
-    width: 80%;
-    margin: 20px auto; /* Aumentado el margen para más espacio alrededor del contenedor */
-}
+    .container {
+	width: 80%;
+	margin: 20px auto; /* Aumentado el margen para más espacio alrededor del contenedor */
+    }
 
-.masthead {
-    background-color: #333; /* Color de fondo del encabezado */
-    padding: 15px;
-    text-align: center;
-    margin-bottom: 20px; /* Aumentado el margen inferior para más espacio entre el encabezado y el contenido siguiente */
-}
-
-.masthead .text-muted{
-    margin-bottom: 30px;
-}
-
-.nav {
-    list-style: none;
-    display: flex;
-    justify-content: center; /* Centrar los elementos del menú */
-}
-
-.nav a {
-    text-decoration: none;
-    color: #fff;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border-bottom: 2px solid transparent;
-    transition: border-bottom 0.3s ease-in-out;
-}
-
-.nav a:hover {
-    border-bottom: 2px solid #fff; /* Cambiar el color de borde al pasar el ratón */
-}
-
-.panel {
-    background-color: #333; /* Color de fondo del panel */
-    border: 1px solid #555; /* Borde del panel */
-    margin-top: 20px;
-    padding: 20px; /* Aumentado el padding para más espacio dentro del panel */
-}
-
-.panel-title {
-    color: #fff; /* Color de texto del título del panel */
-}
-
-.panel-heading .panel-title{
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.footer {
-    margin-top: 20px;
-    padding: 10px 0;
-    background-color: #333; /* Color de fondo del pie de página */
-    text-align: center;
-}
-
-@media (max-width: 600px) {
-    /* Estilos para dispositivos móviles */
     .masthead {
-        flex-direction: column;
+	background-color: #333; /* Color de fondo del encabezado */
+	padding: 15px;
+	text-align: center;
+	margin-bottom: 20px; /* Aumentado el margen inferior para más espacio entre el encabezado y el contenido siguiente */
+    }
+
+    .masthead .text-muted{
+	margin-bottom: 30px;
     }
 
     .nav {
-        flex-direction: column;
-        align-items: center; /* Centrar los elementos del menú en dispositivos móviles */
+	list-style: none;
+	display: flex;
+	justify-content: center; /* Centrar los elementos del menú */
+    }
+
+    .nav a {
+	text-decoration: none;
+	color: #fff;
+	padding: 10px 20px;
+	margin: 0 10px;
+	border-bottom: 2px solid transparent;
+	transition: border-bottom 0.3s ease-in-out;
+    }
+
+    .nav a:hover {
+	border-bottom: 2px solid #fff; /* Cambiar el color de borde al pasar el ratón */
     }
 
     .panel {
-        margin-top: 10px;
+	background-color: #333; /* Color de fondo del panel */
+	border: 1px solid #555; /* Borde del panel */
+	margin-top: 20px;
+	padding: 20px; /* Aumentado el padding para más espacio dentro del panel */
     }
 
-}
+    .panel-title {
+	color: #fff; /* Color de texto del título del panel */
+    }
+
+    .panel-heading .panel-title{
+	text-align: center;
+	margin-bottom: 20px;
+    }
+
+    .footer {
+	margin-top: 20px;
+	padding: 10px 0;
+	background-color: #333; /* Color de fondo del pie de página */
+	text-align: center;
+    }
+
+    @media (max-width: 600px) {
+	/* Estilos para dispositivos móviles */
+	.masthead {
+	    flex-direction: column;
+	}
+
+	.nav {
+	    flex-direction: column;
+	    align-items: center; /* Centrar los elementos del menú en dispositivos móviles */
+	}
+
+	.panel {
+	    margin-top: 10px;
+	}
+
+    }
