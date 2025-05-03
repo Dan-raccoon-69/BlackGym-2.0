@@ -74,7 +74,9 @@
 				    data-cosprodu="${producto.cosProdu}">
 				Agregar al carrito
 			    </button>
-			    <button class="btn buy-now">Comprar ahora</button>
+			    <!-- <button class="btn buy-now">Comprar ahora</button> -->
+			    <button type="submit" class="btn buy-now" name="action" value="insertar">Comprar ahora</button>
+
 			    <div class="shipping-info">
 				<h4>Envío desde</h4><p>BlackGym</p>
 				<h4>Vendido por</h4><p>BlackGym México</p>
